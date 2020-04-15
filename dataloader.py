@@ -84,6 +84,8 @@ for i in range(len(amazon_dataset)):
         break"""
 
 
+##--- Las imagenes quedan guardadas en amazon_dataset, NOMBRE Y ANOTACIONES----#
+
 
 
 
