@@ -86,8 +86,12 @@ for i in range(len(amazon_dataset)):
 
 ##--- Las imagenes quedan guardadas en amazon_dataset, NOMBRE Y ANOTACIONES----#
 
+
+## Guardamos el dataframe con la información de labels para facilitar visualización
+labels_df = pd.read_csv('/home/jlcastillo/Proyecto/Understanding-The-Amazon/Dataset/train_classes.csv')
+
 label_list = []
-for tag_str in amazon_dataset.tags.values:
+for tag_str in labels_df.tags.values:
     labels = tag_str.split(' ')
     for label in labels:
         if label not in label_list:
@@ -96,13 +100,18 @@ for tag_str in amazon_dataset.tags.values:
 
 # Add features for every label
 for label in label_list:
-    amazon_dataset[label] = amazon_dataset['tags'].apply(lambda x: 1 if label in x.split(' ') else 0)
+    labels_df[label] = labels_df['tags'].apply(lambda x: 1 if label in x.split(' ') else 0)
 # Display head
-amazon_dataset.head()
+labels_df.head()
 
 ## Hacemos un histograma con la cantidad de veces que aparece cada categoria
 
-amazon_dataset[label_list].sum().sort_values().plot.bar()
+labels_df[label_list].sum().sort_values().plot.bar()
+
+porcentaje_division = 0.8
+
+dataset_train = labels_df.iloc[:, :porcentaje_division* round(len(labels_df))]
+dataset_test = labels_df[:, porcentaje_division* round(len(labels_df)):]
 
 
 
