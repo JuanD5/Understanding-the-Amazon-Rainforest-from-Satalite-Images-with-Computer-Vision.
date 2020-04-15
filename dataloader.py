@@ -86,11 +86,23 @@ for i in range(len(amazon_dataset)):
 
 ##--- Las imagenes quedan guardadas en amazon_dataset, NOMBRE Y ANOTACIONES----#
 
+label_list = []
+for tag_str in amazon_dataset.tags.values:
+    labels = tag_str.split(' ')
+    for label in labels:
+        if label not in label_list:
+            label_list.append(label)
 
 
+# Add features for every label
+for label in label_list:
+    amazon_dataset[label] = amazon_dataset['tags'].apply(lambda x: 1 if label in x.split(' ') else 0)
+# Display head
+amazon_dataset.head()
 
+## Hacemos un histograma con la cantidad de veces que aparece cada categoria
 
-
+amazon_dataset[label_list].sum().sort_values().plot.bar()
 
 
 
