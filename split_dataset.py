@@ -26,25 +26,25 @@ path = '/home/jlcastillo/Proyecto/Understanding-The-Amazon/Dataset/train-jpg'
 if not  os.path.exists(os.path.join(os.getcwd(),'Split_Amazon_Dataset')):# si no existe una carpeta que se llame asi 
         os.mkdir(os.path.join(os.getcwd(),'Split_Amazon_Dataset')) # la crea 
 
-
 image_list=[]
+
 for filename in os.listdir(path):
+    image_list.append(filename)
 
-        image_list.append(filename)
+train,test = train_test_split(image_list, train_size = 0.8 ,test_size = args["test_size"],random_state = None)
 
-        train,test = train_test_split(image_list,test_size = args["test_size"])
+pdb.set_trace()
+for im_train in train:
+    if not  os.path.exists(os.path.join(path,'Split_Amazon_Dataset','train')):# si no existe una carpeta que se llame asi 
+        os.mkdir(os.path.join(path,'Split_Amazon_Dataset','train')) # la crea 
+    shutil.copy2(os.path.join(path,im_train),os.path.join(path,'Split_Amazon_Dataset','train')) # copiamos las imagenes a la carpeta de train 
 
-        for im_train in train:
-            if not  os.path.exists(os.path.join(path,'Split_Amazon_Dataset','train')):# si no existe una carpeta que se llame asi 
-                os.mkdir(os.path.join(path,'Split_Amazon_Dataset','train')) # la crea 
-            shutil.copy2(os.path.join(path,im_train),os.path.join(path,'Split_Amazon_Dataset','train')) # copiamos las imagenes a la carpeta de train 
+for im_test in test:
+    if not  os.path.exists(os.path.join(path,'Split_Amazon_Dataset','test')):# si no existe una carpeta que se llame asi 
+        os.mkdir(os.path.join(path,'Split_Amazon_Dataset','test')) # la crea 
+    shutil.copy2(os.path.join(path,im_test),os.path.join(path,'Split_Amazon_Dataset','test')) # copiamos las imagenes a la carpeta de test 
 
-        for im_test in test:
-            if not  os.path.exists(os.path.join(path,'Split_Amazon_Dataset','test')):# si no existe una carpeta que se llame asi 
-                os.mkdir(os.path.join(path,'Split_Amazon_Dataset','test')) # la crea 
-            shutil.copy2(os.path.join(path,im_test),os.path.join(path,'Split_Amazon_Dataset','test')) # copiamos las imagenes a la carpeta de test 
-
-        
+                
     
 
         
