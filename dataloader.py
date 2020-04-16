@@ -42,7 +42,6 @@ class AmazonDataset(Dataset):
 
         return sample    
     
-            
 
 # For reading the csv_file with the annotations of the classes. 
 #amazon_classes = pd.read_csv('/home/jlcastillo/Proyecto/Understanding-The-Amazon/Dataset/train_classes.csv')
@@ -62,8 +61,8 @@ def rename (csv_file):
     return amazon_classes    
 
 
-amazon_dataset = AmazonDataset(csv_file = rename('/home/jlcastillo/Proyecto/Understanding-The-Amazon/Dataset/train_classes.csv'),
-                                    root_dir='/home/jlcastillo/Proyecto/Understanding-The-Amazon/Dataset/train-jpg')
+amazon_dataset = AmazonDataset(csv_file = rename('/home/jlcastillo/Proyecto/Database/Dataset/train_classes.csv'),
+                                    root_dir='/home/jlcastillo/Proyecto/Database/Dataset/train-jpg')
 
 
 """fig = plt.figure()
