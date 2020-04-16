@@ -19,7 +19,6 @@ import argparse
 import os.path as osp
 from PIL import Image
 
-
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -62,9 +61,7 @@ args.cuda = not args.no_cuda and torch.cuda.is_available()
 torch.manual_seed(args.seed)
 if args.cuda:
     torch.cuda.manual_seed(args.seed)
-
-
-#kwargs = {'num_workers': 0, 'pin_memory': True} if args.cuda else {}
+kwargs = {'num_workers': 1, 'pin_memory': True} if args.cuda else {}
 
 
 # -------------------------- LOADING THE DATA --------------------------
@@ -90,23 +87,43 @@ print('Training dataset size:', dataset_sizes['train'])
 print('Test dataset size:', dataset_sizes['test'])
 
 # -------------------------- MODEL --------------------------
-resnet18 = models.resnet18(pretrained=True, progress = True)
-resnet101 = models.resnet101(pretrained = True, progress = True)
-
 ## URL`s a los pesos
 RESNET_18 = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
 RESNET_101 = 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'
 
+
+model = models.resnet18(num_classes=17,pretrained=True, progress = True)
+#resnet18.classifier = [nn.Linear(resnet18.fc.in_features, 17)]
+
+#resnet101 = models.resnet101(pretrained = True, progress = True)
+
+for param in model.parameters():
+    param.requires_grad = True
+
+if args.cuda:
+    model.cuda()
+
+load_model = False
+if osp.exists(args.save):
+    with open(args.save, 'rb') as fp:
+        state = torch.load(fp)
+        model.load_state_dict(state)
+        load_model = True
+else:
+    
 ## Cargamos los pesos pre entrenados a las redes
-state18 = model_zoo.load_url(RESNET_18)
+state = model_zoo.load_url(RESNET_18)
+
+state = {x: state[x] for x in state if not x.startswith('fc')}
+
 # current weights (not the pretrained model)
-model_state18 = resnet18.state_dict()
+model_state = model.state_dict()
 # update state_dict with the pretrained model
-model_state18.update(state18)
+model_state.update(state18)
 # load weights into the model
-resnet18.load_state_dict(model_state18)
+model.load_state_dict(model_state)
 
-
+"""
 state101 = model_zoo.load_url(RESNET_101)
 # current weights (not the pretrained model)
 model_state101 = resnet101.state_dict()
@@ -114,9 +131,8 @@ model_state101 = resnet101.state_dict()
 model_state101.update(state18)
 # load weights into the model
 resnet101.load_state_dict(model_state101)
-
-
-
+"""
+optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum)
 def train(epoch):
     model.train()
     for batch_idx, (data, target) in enumerate(train_loader):
