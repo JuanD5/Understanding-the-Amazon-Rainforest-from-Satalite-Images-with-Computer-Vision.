@@ -92,7 +92,7 @@ RESNET_18 = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
 RESNET_101 = 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'
 
 
-model = models.resnet18(num_classes=17,pretrained=True, progress = True)
+model = models.resnet18(num_classes=17)
 #resnet18.classifier = [nn.Linear(resnet18.fc.in_features, 17)]
 
 #resnet101 = models.resnet101(pretrained = True, progress = True)
@@ -113,13 +113,13 @@ else:
         
     ## Cargamos los pesos pre entrenados a las redes
     state = model_zoo.load_url(RESNET_18)
-
+     # eliminate fully connected layers weights (trained for 1000 categories)
     state = {x: state[x] for x in state if not x.startswith('fc')}
 
     # current weights (not the pretrained model)
     model_state = model.state_dict()
     # update state_dict with the pretrained model
-    model_state.update(state18)
+    model_state.update(state)
     # load weights into the model
     model.load_state_dict(model_state)
 

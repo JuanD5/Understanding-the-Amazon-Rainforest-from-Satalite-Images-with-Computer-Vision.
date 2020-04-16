@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 import pdb 
-   
+import os
 
 class AmazonDataset(Dataset):
 
@@ -32,10 +32,10 @@ class AmazonDataset(Dataset):
     def __getitem__(self,idx):
 
         sample = self.filenames.iloc[int(idx)]
-        img_name = sample['image_names']
+        img_name = sample['image_name']
         label = sample['tags']
 
-        image = io.imread(img_name)
+        image = io.imread(os.path.join(self.root_dir,img_name))
 
         if self.transform:
             image = self.transform(image)
