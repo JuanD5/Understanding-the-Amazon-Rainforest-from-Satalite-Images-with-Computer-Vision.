@@ -21,28 +21,57 @@ class AmazonDataset(Dataset):
                 on a sample.
         """
 
-        self.classes = csv_file
+        self.filenames = pd.read_csv(csv_file)
         self.root_dir = root_dir
         self.transform = transform
 
     def __len__(self):
-        return len(self.classes)
+        'Denotes the total number of samples'
+        return len(self.filenames)
 
     def __getitem__(self,idx):
 
-        if torch.is_tensor(idx):
-            idx = idx.tolist()
+        sample = self.filenames.iloc[int(idx)]
+        img_name = sample['image_names']
+        label = sample['tags']
 
-        img_name = os.path.join(self.root_dir,self.classes.iloc[idx,0])
         image = io.imread(img_name)
-        category = self.classes.iloc[idx,1:]
-        sample = {'image':image,'category':category}
+
         if self.transform:
-            sample = self.transform(sample)
+            image = self.transform(image)
+        return image, label
 
-        return sample    
-    
 
+class Rescale(object):
+    """Rescale the image in a sample to a given size.
+
+    Args:
+        output_size (tuple or int): Desired output size. If tuple, output is
+            matched to output_size. If int, smaller of image edges is matched
+            to output_size keeping aspect ratio the same.
+    """
+    def __init__(self, output_size):
+        assert isinstance(output_size, (int, tuple))
+        self.output_size = output_size
+
+    def __call__(self, X):
+        image = X
+
+        h, w = image.shape[:2]
+        if isinstance(self.output_size, int):
+            if h > w:
+                new_h, new_w = self.output_size * h / w, self.output_size
+            else:
+                new_h, new_w = self.output_size, self.output_size * w / h
+        else:
+            new_h, new_w = self.output_size
+
+        new_h, new_w = int(new_h), int(new_w)
+
+        img = transform.resize(image, (new_h, new_w), mode = 'constant')
+        return img
+
+"""
 # For reading the csv_file with the annotations of the classes. 
 #amazon_classes = pd.read_csv('/home/jlcastillo/Proyecto/Understanding-The-Amazon/Dataset/train_classes.csv')
 # Esto devuelve algo asi: 
@@ -64,7 +93,7 @@ def rename (csv_file):
 amazon_dataset = AmazonDataset(csv_file = rename('/home/jlcastillo/Proyecto/Database/Dataset/train_classes.csv'),
                                     root_dir='/home/jlcastillo/Proyecto/Database/Dataset/train-jpg')
 
-
+"""
 """fig = plt.figure()
 
 for i in range(len(amazon_dataset)):
@@ -82,12 +111,12 @@ for i in range(len(amazon_dataset)):
         plt.show()
         break"""
 
-
+"""
 ##--- Las imagenes quedan guardadas en amazon_dataset, NOMBRE Y ANOTACIONES----#
 
 
-## Guardamos el dataframe con la información de labels para facilitar visualización
-labels_df = pd.read_csv('/home/jlcastillo/Proyecto/Understanding-The-Amazon/Dataset/train_classes.csv')
+## Guardamos el dataframe con la informacion de labels para facilitar visualizacion
+labels_df = pd.read_csv('/home/jlcastillo/Proyecto/Database/Dataset/train_classes.csv')
 
 label_list = []
 for tag_str in labels_df.tags.values:
@@ -114,3 +143,4 @@ dataset_test = labels_df[:, porcentaje_division* round(len(labels_df)):]
 
 
 
+"""

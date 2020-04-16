@@ -27,7 +27,7 @@ import torch.nn.functional as F
 from torchvision import models, datasets, transforms
 from torch.autograd import Variable
 import torch.utils.model_zoo as model_zoo
-
+from dataloader import AmazonDataset, Rescale
 
 # Argumentos
 
@@ -46,6 +46,8 @@ parser.add_argument('--gamma', type=float, default=2, metavar='M',
                     help='learning rate decay factor (default: 0.5)')
 parser.add_argument('--no-cuda', action='store_true', default=False,
                     help='disables CUDA training')
+parser.add_argument('--input_size', type=int, default=256, metavar='N',
+                    help='Input image size (default: 256)')
 parser.add_argument('--seed', type=int, default=1, metavar='S',
                     help='random seed (default: 1)')
 parser.add_argument('--log-interval', type=int, default=10, metavar='N',
@@ -61,10 +63,35 @@ torch.manual_seed(args.seed)
 if args.cuda:
     torch.cuda.manual_seed(args.seed)
 
-kwargs = {'num_workers': 0, 'pin_memory': True} if args.cuda else {}
 
-resnet18 = models.resnet18(pretrained=True, progress = True, **kwargs)
-resnet101 = models.resnet101(pretrained = True, progress = True, **kwargs)
+#kwargs = {'num_workers': 0, 'pin_memory': True} if args.cuda else {}
+
+
+# -------------------------- LOADING THE DATA --------------------------
+# Data augmentation and normalization for training
+# Just normalization for validation
+
+print("Initializing Datasets and Dataloaders...")
+data_path = '/home/jlcastillo/Proyecto/Database/Dataset/train-jpg'
+# Create training and test datasets
+train_dataset = AmazonDataset('train.csv', data_path, transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
+##ToTensor normaliza
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
+
+# TEST call your dataset function def __init__(self, csv_file, data_path, transform=None)
+test_dataset = AmazonDataset('test.csv', data_path, transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
+test_loader = torch.utils.data.DataLoader(test_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
+
+# check the size of your datatset
+dataset_sizes = {}
+dataset_sizes['train'] = len(train_dataset)
+dataset_sizes['test'] = len(test_dataset)
+print('Training dataset size:', dataset_sizes['train'])
+print('Test dataset size:', dataset_sizes['test'])
+
+# -------------------------- MODEL --------------------------
+resnet18 = models.resnet18(pretrained=True, progress = True)
+resnet101 = models.resnet101(pretrained = True, progress = True)
 
 ## URL`s a los pesos
 RESNET_18 = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
@@ -75,7 +102,7 @@ state18 = model_zoo.load_url(RESNET_18)
 # current weights (not the pretrained model)
 model_state18 = resnet18.state_dict()
 # update state_dict with the pretrained model
-model_state18.update(state)
+model_state18.update(state18)
 # load weights into the model
 resnet18.load_state_dict(model_state18)
 
@@ -84,7 +111,7 @@ state101 = model_zoo.load_url(RESNET_101)
 # current weights (not the pretrained model)
 model_state101 = resnet101.state_dict()
 # update state_dict with the pretrained model
-model_state101.update(state)
+model_state101.update(state18)
 # load weights into the model
 resnet101.load_state_dict(model_state101)
 
