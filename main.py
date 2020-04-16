@@ -71,9 +71,21 @@ RESNET_18 = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
 RESNET_101 = 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'
 
 ## Cargamos los pesos pre entrenados a las redes
-model_zoo.load_url(RESNET_18)
-model_zoo.load_url(RESNET_101)
+state18 = model_zoo.load_url(RESNET_18)
+# current weights (not the pretrained model)
+model_state18 = resnet18.state_dict()
+# update state_dict with the pretrained model
+model_state18.update(state)
+# load weights into the model
+resnet18.load_state_dict(model_state18)
 
 
+state101 = model_zoo.load_url(RESNET_101)
+# current weights (not the pretrained model)
+model_state101 = resnet101.state_dict()
+# update state_dict with the pretrained model
+model_state101.update(state)
+# load weights into the model
+resnet101.load_state_dict(model_state101)
 
 
