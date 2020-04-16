@@ -110,18 +110,18 @@ if osp.exists(args.save):
         model.load_state_dict(state)
         load_model = True
 else:
-    
-## Cargamos los pesos pre entrenados a las redes
-state = model_zoo.load_url(RESNET_18)
+        
+    ## Cargamos los pesos pre entrenados a las redes
+    state = model_zoo.load_url(RESNET_18)
 
-state = {x: state[x] for x in state if not x.startswith('fc')}
+    state = {x: state[x] for x in state if not x.startswith('fc')}
 
-# current weights (not the pretrained model)
-model_state = model.state_dict()
-# update state_dict with the pretrained model
-model_state.update(state18)
-# load weights into the model
-model.load_state_dict(model_state)
+    # current weights (not the pretrained model)
+    model_state = model.state_dict()
+    # update state_dict with the pretrained model
+    model_state.update(state18)
+    # load weights into the model
+    model.load_state_dict(model_state)
 
 """
 state101 = model_zoo.load_url(RESNET_101)
