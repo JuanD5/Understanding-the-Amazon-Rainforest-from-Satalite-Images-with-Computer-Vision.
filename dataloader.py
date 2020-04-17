@@ -9,10 +9,18 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 import pdb 
 import os
+from PIL import Image
+
+def get_labels(fname):
+    with open(fname,'r') as f:
+        labels = [t.strip() for t in f.read().split(',')]
+    labels2idx = {t:i for i,t in enumerate(labels)}
+    idx2labels = {i:t for i,t in enumerate(labels)}
+    return labels,labels2idx,idx2labels
 
 class AmazonDataset(Dataset):
 
-    def __init__(self,csv_file,root_dir,transform=None):
+    def __init__(self,csv_file,root_dir,labels_file,transform=None):
         """
         Args: 
         csv_file (string): Path to the csv file with annotations.
@@ -25,21 +33,29 @@ class AmazonDataset(Dataset):
         self.root_dir = root_dir
         self.transform = transform
 
+        self.labels, self.labels2idx, self.idx2labels = get_labels(labels_file)
+        self.n_labels = len(self.labels)
+
     def __len__(self):
         'Denotes the total number of samples'
         return len(self.filenames)
 
     def __getitem__(self,idx):
-
         sample = self.filenames.iloc[int(idx)]
         img_name = sample['image_name']
-        label = sample['tags']
+        #label = sample['tags']
 
         image = io.imread(os.path.join(self.root_dir,img_name))
 
+        labels = self.filenames.ix[idx, 1]
+        target = torch.zeros(self.n_labels)
+        label_idx = torch.LongTensor([self.labels2idx[tag] for tag in labels.split(' ')])
+        target[label_idx] = 1
+
         if self.transform:
             image = self.transform(image)
-        return image, label
+        
+        return image, target
 
 
 class Rescale(object):

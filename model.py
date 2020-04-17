@@ -35,6 +35,7 @@ class AmazonSimpleNet(nn.Module):
         )
 
     def forward(self, x):
+        x = x.float()
         x = self.features(x)
         x = x.view(x.size(0), 256 * 7 * 7)
         x = self.classifier(x)
@@ -54,6 +55,7 @@ class AmazonResNet18(nn.Module):
         self.pretrained_model.fc = self.classifier
 
     def forward(self, x):
+        x = x.float()
         x = self.pretrained_model(x)
         return F.sigmoid(x)
 
