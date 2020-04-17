@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from PIL import Image, ImageOps
 import numpy as np
+import pdb
 
 def get_conv_out(layer, input_size):
     w, h = input_size
@@ -74,8 +75,8 @@ def get_multilabel_accuracy(pred, target):
         accuracy and total accuracy in training.
     """
     pred = pred > 0.5
-    r = (pred == target.byte())
-    acc = r.float().cpu().sum().data[0]
+    r = (pred == target.bool())
+    acc = r.float().cpu().sum().item()
     return acc/(pred.size()[1]*pred.size()[0])
 
 def save_model(model_state, filename):

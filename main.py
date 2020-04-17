@@ -28,6 +28,9 @@ import torch.utils.model_zoo as model_zoo
 from dataloader import AmazonDataset, Rescale
 import model
 import utils
+from tensorboard_logger import configure, log_value
+from sklearn.metrics import fbeta_score
+
 # Argumentos
 
 parser = argparse.ArgumentParser(description='PyTorch resnet18 for Image Multiclassification')
@@ -162,6 +165,10 @@ os.mkdir(current_dir)
 logfile = open('{}/log.txt'.format(current_dir), 'w')
 print(args, file=logfile)
 
+# Tensorboard viz. tensorboard --logdir {yourlogdir}. Requires tensorflow.
+configure(current_dir, flush_secs=5)
+
+
 ##########################################################################################
 #Model names:
 model_names = sorted(name for name in model.__dict__
@@ -210,7 +217,7 @@ def validate(net, loader, criterion):
         acc = utils.get_multilabel_accuracy(output, y)
         targets = torch.cat((targets, y.cpu().data), 0)
         predictions = torch.cat((predictions,output.cpu().data), 0)
-        running_loss += loss.data[0]
+        running_loss += loss.item()
         running_accuracy += acc
     fscore = fbeta_score(targets.numpy(), predictions.numpy() > 0.23,
                 beta=2, average='samples')

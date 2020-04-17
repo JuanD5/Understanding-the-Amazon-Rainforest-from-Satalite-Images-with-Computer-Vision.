@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 import pdb 
-import os
 from PIL import Image
 
 def get_labels(fname):
