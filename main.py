@@ -183,7 +183,8 @@ def train(net, loader, criterion, optimizer, verbose = False):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        running_loss += loss.data[0]
+        #pdb.set_trace()
+        running_loss += loss.item()                                     
         acc = utils.get_multilabel_accuracy(output, y)
         running_accuracy += acc
         if i%400 == 0 and verbose:

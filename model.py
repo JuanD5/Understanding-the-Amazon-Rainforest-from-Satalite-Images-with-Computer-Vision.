@@ -2,6 +2,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import models
 import utils
+import pdb
 
 class AmazonSimpleNet(nn.Module):
     """Simple convnet """
@@ -26,7 +27,7 @@ class AmazonSimpleNet(nn.Module):
         )
         self.classifier = nn.Sequential(
             nn.Dropout(),
-            nn.Linear(256 * 7 * 7, 512),
+            nn.Linear(256 * 8 * 8, 512),
             nn.ReLU(inplace=True),
             nn.Dropout(),
             nn.Linear(512, 256),
@@ -37,7 +38,7 @@ class AmazonSimpleNet(nn.Module):
     def forward(self, x):
         x = x.float()
         x = self.features(x)
-        x = x.view(x.size(0), 256 * 7 * 7)
+        x = x.view(x.size(0), 256 * 8 * 8)
         x = self.classifier(x)
         return F.sigmoid(x)
 
