@@ -83,9 +83,13 @@ def save_model(model_state, filename):
     # TODO: add it as checkpoint
     torch.save(model_state,filename)
 
-def adjust_learning_rate(optimizer, epoch):
-    """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
-    lr = args.lr * (0.1 ** (epoch // 30))
+def adjust_learning_rate(lr0,optimizer, gamma, step):
+    """Sets the learning rate to the initial LR decayed
+       by 10 at every specified step
+       Adapted from PyTorch Imagenet example:
+       https://github.com/pytorch/examples/blob/master/imagenet/main.py
+    """
+    lr = lr0 * (gamma ** (step))
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr
 
