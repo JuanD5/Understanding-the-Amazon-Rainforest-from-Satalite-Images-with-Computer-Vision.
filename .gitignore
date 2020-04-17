@@ -1,0 +1,6 @@
+## Archivos de importación
+*.pyc
+
+## Caspertas
+saved-models/
+logs/
