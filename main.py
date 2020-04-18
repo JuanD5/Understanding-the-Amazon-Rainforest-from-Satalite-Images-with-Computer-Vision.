@@ -78,15 +78,15 @@ kwargs = {'pin_memory': True} if args.cuda else {}
 print("Initializing Datasets and Dataloaders...")
 data_path = '/home/jlcastillo/Proyecto/Database/Dataset/train-jpg'
 # Create training, validation and test datasets
-train_dataset = AmazonDataset('train.csv', data_path,'labels.txt', transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
+train_dataset = AmazonDataset('csv/train.csv', data_path,'csv/labels.txt', transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
 
 #Val
-val_dataset = AmazonDataset('val.csv', data_path,'labels.txt',transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
+val_dataset = AmazonDataset('csv/val.csv', data_path,'csv/labels.txt',transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
 val_loader = torch.utils.data.DataLoader(train_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
 
 # TEST call your dataset function def __init__(self, csv_file, data_path, transform=None)
-test_dataset = AmazonDataset('test.csv', data_path, 'labels.txt',transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
+test_dataset = AmazonDataset('csv/test.csv', data_path, 'csv/labels.txt',transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
 test_loader = torch.utils.data.DataLoader(test_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
 
 # check the size of your datatset

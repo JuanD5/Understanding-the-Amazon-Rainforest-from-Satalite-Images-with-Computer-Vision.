@@ -72,7 +72,7 @@ F-score: 0.470, en la última época.
 
 
 
-### - Baseline ResNet18 pre-entrenado *-[Jess] Corriendo un nuevo intento*
+### - Baseline ResNet18 pre-entrenado
 
 <a name="run2"></a>
 
@@ -80,11 +80,9 @@ Nombre del modelo: `AmazonResNet18-run-2.pth`
 
 Nombre de la carpeta del logfile: `AmazonResNet18/run-2`
 
-Tiempo aproximado: 
+Tiempo aproximado: 18 minutos/época
 
-F-score:
-
-**No corrió completo, se quedó sin paciencia y se detuvo en la época 8.**
+F-score: 0.89
 
 **Parámetros:**
 
