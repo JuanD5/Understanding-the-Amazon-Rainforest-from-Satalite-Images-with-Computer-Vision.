@@ -66,4 +66,72 @@ AmazonResNet18(
         (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
         (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
         (relu): ReLU(inplace=True)
-        (conv2): Conv
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+    (fc): Sequential(
+      (0): Linear(in_features=512, out_features=17, bias=True)
+    )
+  )
+  (classifier): Sequential(
+    (0): Linear(in_features=512, out_features=17, bias=True)
+  )
+)
+Epoch: 0	 train loss: 0.186, train acc: 0.934	
+                val loss: 0.170, val acc: 0.944	 fscore: 0.861	
+                time: 964.4s
+Epoch: 1	 train loss: 0.153, train acc: 0.948	
+                val loss: 0.179, val acc: 0.945	 fscore: 0.863	
+                time: 966.5s
+Epoch: 2	 train loss: 0.131, train acc: 0.954	
+                val loss: 0.159, val acc: 0.951	 fscore: 0.883	
+                time: 970.2s
+Epoch: 3	 train loss: 0.117, train acc: 0.958	
+                val loss: 0.156, val acc: 0.950	 fscore: 0.879	
+                time: 967.8s
+Epoch: 4	 train loss: 0.109, train acc: 0.961	
+                val loss: 0.148, val acc: 0.952	 fscore: 0.883	
+                time: 1120.3s
+Epoch: 5	 train loss: 0.102, train acc: 0.963	
+                val loss: 0.145, val acc: 0.954	 fscore: 0.887	
+                time: 969.0s
+Epoch: 6	 train loss: 0.097, train acc: 0.964	
+                val loss: 0.233, val acc: 0.949	 fscore: 0.866	
+                time: 971.8s
+Epoch: 7	 train loss: 0.092, train acc: 0.966	
+                val loss: 0.156, val acc: 0.955	 fscore: 0.877	
+                time: 967.7s
+Epoch: 8	 train loss: 0.088, train acc: 0.968	
+                val loss: 0.132, val acc: 0.959	 fscore: 0.897	
+                time: 969.6s
+Epoch: 9	 train loss: 0.084, train acc: 0.970	
+                val loss: 0.130, val acc: 0.959	 fscore: 0.902	
+                time: 972.0s
+Epoch: 10	 train loss: 0.079, train acc: 0.971	
+                val loss: 0.163, val acc: 0.956	 fscore: 0.893	
+                time: 971.0s
+Epoch: 11	 train loss: 0.074, train acc: 0.973	
+                val loss: 0.121, val acc: 0.961	 fscore: 0.914	
+                time: 969.1s
+Epoch: 12	 train loss: 0.070, train acc: 0.975	
+                val loss: 0.107, val acc: 0.965	 fscore: 0.921	
+                time: 970.6s
+Epoch: 13	 train loss: 0.064, train acc: 0.977	
+                val loss: 0.122, val acc: 0.964	 fscore: 0.904	
+                time: 974.0s
+Epoch: 14	 train loss: 0.060, train acc: 0.979	
+                val loss: 0.137, val acc: 0.961	 fscore: 0.899	
+                time: 971.9s
