@@ -4,7 +4,8 @@ Lista para acceder mas rápido a cada uno:
 
 1. [Baseline](#run0): Nuestro baseline.
 2. [Baseline ResNet](#run1): Nuestro baseline con pesos pre-entrenados de ResNet-18. Corrió hasta la época 8.
-3. [Baseline ResNet](#run2): Nuestro baseline con pesos pre-entrenados de ResNet-18.
+3. [Baseline ResNet](#run2): Nuestro baseline con pesos pre-entrenados de ResNet-18. Este sí corrió completo.
+4. [ResNet101](#run3): Modelo pre-entrenado. 
 
 
 
@@ -82,7 +83,7 @@ Nombre de la carpeta del logfile: `AmazonResNet18/run-2`
 
 Tiempo aproximado: 18 minutos/época
 
-F-score: 0.89
+F-score: 0.89, en la última época. 
 
 **Parámetros:**
 
@@ -95,6 +96,35 @@ F-score: 0.89
 + [--momentum M] 0.5
 + [--gamma M] 2
 + [--patience PATIENCE] **10** 
++ [--input_size N] 256 
++ *[--no_cuda]*
++ [--seed S] 1
++ [--log-interval N] 10
++ [--save SAVE] model.pt
+
+### - Baseline ResNet101 pre-entrenado --*[Jess] Corriendo en BCV*--
+
+<a name="run3"></a>
+
+Nombre del modelo: `AmazonResNet101-run-0.pth`
+
+Nombre de la carpeta del logfile: `AmazonResNet101/run-0`
+
+Tiempo aproximado:
+
+F-score: 
+
+**Parámetros:**
+
++ --model MODEL] AmazonResNet18
++ [--batch-size N]  4
++ [--test-batch-size N] 128
++ [--epochs N] 15
++ [--lr LR]  0.01
++ *[-v]*
++ [--momentum M] 0.5
++ [--gamma M] 2
++ [--patience PATIENCE] **15** 
 + [--input_size N] 256 
 + *[--no_cuda]*
 + [--seed S] 1

@@ -60,8 +60,30 @@ class AmazonResNet18(nn.Module):
         x = self.pretrained_model(x)
         return F.sigmoid(x)
 
+
+class AmazonResNet101(nn.Module):
+
+    """ Resnet 101 pretrained"""
+
+    def __init__(self):
+        super(AmazonResNet101,self).__init__()
+        self.pretrained_model = models.resnet101(pretrained=True)
+        classifier = [
+            nn.Linear(self.pretrained_model.fc.in_features, 17)
+        ]
+        self.classifier = nn.Sequential(*classifier)
+        self.pretrained_model.fc = self.classifier
+
+    def forward(self, x):
+        x = x.float()
+        x = self.pretrained_model(x)
+        return F.sigmoid(x)
+
+
 if __name__ == '__main__':
     net = AmazonSimpleNet()
     size = utils.calculate_feature_size(net.features,(224,224))
     print(size)
+
+
 
