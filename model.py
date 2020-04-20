@@ -3,6 +3,7 @@ import torch.nn.functional as F
 from torchvision import models
 import utils
 import pdb
+from torchsummary import summary
 
 class AmazonSimpleNet(nn.Module):
     """Simple convnet """
@@ -81,9 +82,9 @@ class AmazonResNet101(nn.Module):
 
 
 if __name__ == '__main__':
-    net = AmazonSimpleNet()
+    net = AmazonSimpleNet().cuda()
     size = utils.calculate_feature_size(net.features,(224,224))
     print(size)
-
+    summary(net, (3, 256, 256))
 
 

@@ -2,16 +2,17 @@
 
 Lista para acceder mas rápido a cada uno:
 
-1. [Baseline](#run0): Nuestro baseline.
-2. [Baseline ResNet](#run1): Nuestro baseline con pesos pre-entrenados de ResNet-18. Corrió hasta la época 8.
-3. [Baseline ResNet](#run2): Nuestro baseline con pesos pre-entrenados de ResNet-18. Este sí corrió completo.
-4. [ResNet101](#run3): Modelo pre-entrenado. 
+1. [Baseline](#run1): Nuestro baseline.
+2. [Baseline ResNet](#run2): Nuestro baseline con pesos pre-entrenados de ResNet-18. Corrió hasta la época 8.
+3. [Baseline ResNet](#run3): Nuestro baseline con pesos pre-entrenados de ResNet-18. Este sí corrió completo.
+4. [ResNet101](#run4): Modelo pre-entrenado. 
+5. [ResNet101](#run5): Modelo pre-entrenado en más épocas. 
 
 
 
 ### - Baseline:
 
-<a name="run0"></a>
+<a name="run1"></a>
 
 Nombre del modelo: `AmazonSimpleNet-run-0.pth.tar`
 
@@ -42,7 +43,7 @@ F-score: 0.860, en la última época.
 
 ### - Baseline ResNet18 pre-entrenado 
 
-<a name="run1"></a>
+<a name="run2"></a>
 
 Nombre del modelo: `AmazonResNet18-run-1.pth`
 
@@ -75,7 +76,7 @@ F-score: 0.470, en la última época.
 
 ### - Baseline ResNet18 pre-entrenado
 
-<a name="run2"></a>
+<a name="run3"></a>
 
 Nombre del modelo: `AmazonResNet18-run-2.pth`
 
@@ -102,25 +103,54 @@ F-score: 0.89, en la última época.
 + [--log-interval N] 10
 + [--save SAVE] model.pt
 
-### - Baseline ResNet101 pre-entrenado --*[Jess] Corriendo en BCV*--
+### - Baseline ResNet101 pre-entrenado
 
-<a name="run3"></a>
+<a name="run4"></a>
 
 Nombre del modelo: `AmazonResNet101-run-0.pth`
 
 Nombre de la carpeta del logfile: `AmazonResNet101/run-0`
 
-Tiempo aproximado:
+Tiempo aproximado: 50 minutos/ época
+
+F-score: 0.936
+
+**Parámetros:**
+
++ --model MODEL] AmazonResNet101
++ [--batch-size N]  4
++ [--test-batch-size N] 128
++ [--epochs N] 15
++ [--lr LR]  0.01
++ *[-v]*
++ [--momentum M] 0.5
++ [--gamma M] 2
++ [--patience PATIENCE] **15** 
++ [--input_size N] 256 
++ *[--no_cuda]*
++ [--seed S] 1
++ [--log-interval N] 10
++ [--save SAVE] model.pt
+
+### - ResNet101 pre-entrenado *--[Jess] Corriendo--*
+
+<a name="run5"></a>
+
+Nombre del modelo: `AmazonResNet101-run-1.pth`
+
+Nombre de la carpeta del logfile: `AmazonResNet101/run-1`
+
+Tiempo aproximado: 
 
 F-score: 
 
 **Parámetros:**
 
-+ --model MODEL] AmazonResNet18
-+ [--batch-size N]  4
++ --model MODEL] AmazonResNet101
++ [--batch-size N]  8
 + [--test-batch-size N] 128
-+ [--epochs N] 15
-+ [--lr LR]  0.01
++ [--epochs N] 40
++ [--lr LR]  0.001
 + *[-v]*
 + [--momentum M] 0.5
 + [--gamma M] 2
