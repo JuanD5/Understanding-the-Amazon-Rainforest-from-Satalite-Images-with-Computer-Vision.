@@ -44,7 +44,7 @@ class AmazonDataset(Dataset):
         img_name = sample['image_name']
         #label = sample['tags']
 
-        image = io.imread(os.path.join(self.root_dir,img_name))
+        image = io.imread(os.path.join(self.root_dir,img_name+'.jpg'))
 
         labels = self.filenames.ix[idx, 1]
         target = torch.zeros(self.n_labels)
