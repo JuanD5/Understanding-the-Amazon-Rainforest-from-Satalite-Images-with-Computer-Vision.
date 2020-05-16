@@ -1,5 +1,7 @@
 # Experimentos:
 
+<a name="up"></a>
+
 Lista para acceder mas rápido a cada uno:
 
 1. [Baseline](#run1): Nuestro baseline.
@@ -7,10 +9,11 @@ Lista para acceder mas rápido a cada uno:
 3. [Baseline ResNet](#run3): Nuestro baseline con pesos pre-entrenados de ResNet-18. Este sí corrió completo.
 4. [ResNet101](#run4): Modelo pre-entrenado. 
 5. [ResNet101](#run5): Modelo pre-entrenado en más épocas. 
+6. [ResNet101](#run6): Modelo pre-entrenado, sin validar.
 
 
 
-### - Baseline:
+### - [Baseline](#up):
 
 <a name="run1"></a>
 
@@ -41,7 +44,7 @@ F-score: 0.860, en la última época.
 
 
 
-### - Baseline ResNet18 pre-entrenado 
+### - [Baseline ResNet18 pre-entrenado](#up) 
 
 <a name="run2"></a>
 
@@ -74,7 +77,7 @@ F-score: 0.470, en la última época.
 
 
 
-### - Baseline ResNet18 pre-entrenado
+### - [Baseline ResNet18 pre-entrenado](#up)
 
 <a name="run3"></a>
 
@@ -103,7 +106,7 @@ F-score: 0.89, en la última época.
 + [--log-interval N] 10
 + [--save SAVE] model.pt
 
-### - Baseline ResNet101 pre-entrenado
+### - [Baseline ResNet101 pre-entrenado](#up)
 
 <a name="run4"></a>
 
@@ -132,11 +135,42 @@ F-score: 0.936
 + [--log-interval N] 10
 + [--save SAVE] model.pt
 
-### - ResNet101 pre-entrenado *--[Jess] Corriendo--*
+### - [ResNet101 pre-entrenado](#up)
 
 <a name="run5"></a>
 
 Nombre del modelo: `AmazonResNet101-run-1.pth`
+
+Nombre de la carpeta del logfile: `AmazonResNet101/run-1`
+
+Tiempo aproximado: 
+
+F-score: **Oficial:** 0.84604
+
+**Parámetros:**
+
++ --model MODEL] AmazonResNet101
++ [--batch-size N]  8
++ [--test-batch-size N] 128
++ [--epochs N] 40
++ [--lr LR]  0.001
++ *[-v]*
++ [--momentum M] 0.5
++ [--gamma M] 2
++ [--patience PATIENCE] **15** 
++ [--input_size N] 256 
++ *[--no_cuda]*
++ [--seed S] 1
++ [--log-interval N] 10
++ [--save SAVE] model.pt
+
+### - [ResNet101 pre-entrenado sin validar *--[Jess] Corriendo--*](#up)
+
+<a name="run6"></a>
+
+Base de datos de train completa.
+
+Nombre del modelo: `AmazonResNet101-run-1.pth.tar`
 
 Nombre de la carpeta del logfile: `AmazonResNet101/run-1`
 
