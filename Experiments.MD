@@ -143,7 +143,7 @@ Nombre del modelo: `AmazonResNet101-run-1.pth`
 
 Nombre de la carpeta del logfile: `AmazonResNet101/run-1`
 
-Tiempo aproximado: 
+Archivo de predicción: `pred0.cvs`
 
 F-score: **Oficial:** 0.84604
 
@@ -164,19 +164,19 @@ F-score: **Oficial:** 0.84604
 + [--log-interval N] 10
 + [--save SAVE] model.pt
 
-### - [ResNet101 pre-entrenado sin validar *--[Jess] Corriendo--*](#up)
+### - [ResNet101 pre-entrenado sin validar](#up)
 
 <a name="run6"></a>
 
 Base de datos de train completa.
 
-Nombre del modelo: `AmazonResNet101-run-1.pth.tar`
+Nombre del modelo: `AmazonResNet101-run-2.pth.tar`
 
-Nombre de la carpeta del logfile: `AmazonResNet101/run-1`
+Nombre de la carpeta del logfile: `AmazonResNet101/run-2`
 
-Tiempo aproximado: 
+Archivo de predicción: `pred_40epochs.cvs`
 
-F-score: 
+F-score: **Oficial:** 0.89468
 
 **Parámetros:**
 

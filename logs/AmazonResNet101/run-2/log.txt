@@ -335,3 +335,83 @@ AmazonResNet101(
     (0): Linear(in_features=2048, out_features=17, bias=True)
   )
 )
+Epoch: 0	 train loss: 0.148, train acc: 0.943	
+                time: 2850.2s
+Epoch: 1	 train loss: 0.112, train acc: 0.958	
+                time: 2847.4s
+Epoch: 2	 train loss: 0.100, train acc: 0.963	
+                time: 2848.4s
+Epoch: 3	 train loss: 0.093, train acc: 0.966	
+                time: 2842.4s
+Epoch: 4	 train loss: 0.087, train acc: 0.968	
+                time: 2841.3s
+Epoch: 5	 train loss: 0.081, train acc: 0.970	
+                time: 2845.1s
+Epoch: 6	 train loss: 0.076, train acc: 0.972	
+                time: 2849.2s
+Epoch: 7	 train loss: 0.070, train acc: 0.974	
+                time: 2849.4s
+Epoch: 8	 train loss: 0.065, train acc: 0.976	
+                time: 2846.8s
+Epoch: 9	 train loss: 0.058, train acc: 0.979	
+                time: 2847.9s
+Epoch: 10	 train loss: 0.053, train acc: 0.981	
+                time: 4841.8s
+Epoch: 11	 train loss: 0.048, train acc: 0.983	
+                time: 6339.8s
+Epoch: 12	 train loss: 0.043, train acc: 0.985	
+                time: 2848.8s
+Epoch: 13	 train loss: 0.038, train acc: 0.987	
+                time: 2846.4s
+Epoch: 14	 train loss: 0.033, train acc: 0.989	
+                time: 2844.9s
+Epoch: 15	 train loss: 0.029, train acc: 0.990	
+                time: 2844.8s
+Epoch: 16	 train loss: 0.026, train acc: 0.991	
+                time: 2851.2s
+Epoch: 17	 train loss: 0.024, train acc: 0.992	
+                time: 2845.5s
+Epoch: 18	 train loss: 0.021, train acc: 0.993	
+                time: 2842.5s
+Epoch: 19	 train loss: 0.019, train acc: 0.994	
+                time: 2832.9s
+Epoch: 20	 train loss: 0.017, train acc: 0.995	
+                time: 2838.0s
+Epoch: 21	 train loss: 0.015, train acc: 0.995	
+                time: 6095.7s
+Epoch: 22	 train loss: 0.014, train acc: 0.996	
+                time: 5084.6s
+Epoch: 23	 train loss: 0.012, train acc: 0.996	
+                time: 3227.8s
+Epoch: 24	 train loss: 0.012, train acc: 0.997	
+                time: 6954.2s
+Epoch: 25	 train loss: 0.011, train acc: 0.997	
+                time: 3304.3s
+Epoch: 26	 train loss: 0.010, train acc: 0.997	
+                time: 2846.4s
+Epoch: 27	 train loss: 0.009, train acc: 0.997	
+                time: 2849.7s
+Epoch: 28	 train loss: 0.008, train acc: 0.998	
+                time: 2848.5s
+Epoch: 29	 train loss: 0.007, train acc: 0.998	
+                time: 2850.0s
+Epoch: 30	 train loss: 0.007, train acc: 0.998	
+                time: 2847.2s
+Epoch: 31	 train loss: 0.007, train acc: 0.998	
+                time: 2847.9s
+Epoch: 32	 train loss: 0.006, train acc: 0.998	
+                time: 2851.9s
+Epoch: 33	 train loss: 0.005, train acc: 0.999	
+                time: 2850.4s
+Epoch: 34	 train loss: 0.005, train acc: 0.999	
+                time: 2847.9s
+Epoch: 35	 train loss: 0.005, train acc: 0.999	
+                time: 2843.8s
+Epoch: 36	 train loss: 0.004, train acc: 0.999	
+                time: 2843.5s
+Epoch: 37	 train loss: 0.004, train acc: 0.999	
+                time: 3997.8s
+Epoch: 38	 train loss: 0.004, train acc: 0.999	
+                time: 6984.9s
+Epoch: 39	 train loss: 0.004, train acc: 0.999	
+                time: 6942.6s

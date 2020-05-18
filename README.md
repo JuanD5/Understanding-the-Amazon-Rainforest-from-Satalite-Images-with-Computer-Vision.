@@ -31,3 +31,13 @@ Hay un archivo que se llama **Experiments.MD**.  La idea es registrar aquí todo
 Pasa mucho que uno empieza a correr algo y dice: "Pucha, se me olvidó cambiar tal cosa", y detiene el experimento. A veces, se alcanzan a crear las carpetas, y lo mejor es eliminarlas de una vez.  Tener el Markdown siempre actualizado permite precisamente no borrar lo que no se tiene que borrar.
 
  
+
+## 3. Test
+
+Para hacer el test, se corre:
+
+`python -W ignore test.py --model saved-models/AmazonResNet101-run-3.pth.tar --output_file "pred_x.csv" --batch_size 8`
+
+Para hacer la evaluación en Kaggle, se corre:
+
+`kaggle competitions submit -c planet-understanding-the-amazon-from-space -f pred_x.csv -m "Run-x"`
