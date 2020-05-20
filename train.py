@@ -61,24 +61,41 @@ parser.add_argument('--log-interval', type=int, default=10, metavar='N',
 parser.add_argument('--save', type=str, default='model.pt',
                     help='file on which to save model weights')
 
+parser.add_argument('--gpu', type=str, default='1',
+                    help='GPU(s) to use (default: 1)')
+
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
 cuda = not args.no_cuda and torch.cuda.is_available() # use cuda
+
 
 torch.manual_seed(args.seed)
 if args.cuda:
     torch.cuda.manual_seed(args.seed)
 kwargs = {'pin_memory': True} if args.cuda else {}
 
+os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
 
 # -------------------------- LOADING THE DATA --------------------------
 # Data augmentation and normalization for training
 # Just normalization for validation
-
+"""
+train_transforms = transforms.Compose([
+                        transforms.RandomHorizontalFlip(),
+                        utils.RandomRotation(),
+                        utils.RandomTranslation(),
+                        utils.RandomVerticalFlip(),
+                        transforms.ToTensor()])
+"""
+train_transforms = transforms.Compose([
+                        transforms.ToTensor()])
 print("Initializing Datasets and Dataloaders...")
-data_path = '/home/jlcastillo/Database_real/train-jpg'
+data_path = '/home/jlcastillo/Database_real/train-tif-v2'
+
+
+
 # Create training, validation and test datasets
-train_dataset = AmazonDataset('csv/train_v2.csv', data_path,'csv/labels.txt', transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
+train_dataset = AmazonDataset('csv/train_v2.csv', data_path,'csv/labels.txt', train_transforms)
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
 
 
@@ -92,47 +109,7 @@ print('Training dataset size:', dataset_sizes['train'])
 RESNET_18 = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
 RESNET_101 = 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'
 
-"""
-model = models.resnet18(num_classes=17)
-#resnet18.classifier = [nn.Linear(resnet18.fc.in_features, 17)]
 
-#resnet101 = models.resnet101(pretrained = True, progress = True)
-
-for param in model.parameters():
-    param.requires_grad = True
-
-if args.cuda:
-    model.cuda()
-
-load_model = False
-if osp.exists(args.save):
-    with open(args.save, 'rb') as fp:
-        state = torch.load(fp)
-        model.load_state_dict(state)
-        load_model = True
-else:
-        
-    ## Cargamos los pesos pre entrenados a las redes
-    state = model_zoo.load_url(RESNET_18)
-     # eliminate fully connected layers weights (trained for 1000 categories)
-    state = {x: state[x] for x in state if not x.startswith('fc')}
-
-    # current weights (not the pretrained model)
-    model_state = model.state_dict()
-    # update state_dict with the pretrained model
-    model_state.update(state)
-    # load weights into the model
-    model.load_state_dict(model_state)
-"""
-"""
-state101 = model_zoo.load_url(RESNET_101)
-# current weights (not the pretrained model)
-model_state101 = resnet101.state_dict()
-# update state_dict with the pretrained model
-model_state101.update(state18)
-# load weights into the model
-resnet101.load_state_dict(model_state101)
-"""
 ###### Para salvar modelos y logs ##################
 # Setup folders for saved models and logs
 if not os.path.exists('saved-models/'):

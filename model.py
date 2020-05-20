@@ -68,13 +68,19 @@ class AmazonResNet101(nn.Module):
 
     def __init__(self):
         super(AmazonResNet101,self).__init__()
+       
         self.pretrained_model = models.resnet101(pretrained=True)
+        #Para cuatro canales:
+        self.pretrained_model.conv1 = nn.Conv2d(4, 64, kernel_size=(7, 7), stride=1,padding=(3, 3), bias=False)
+        #state['conv1.weight'] = torch.mean(state['conv1.weight'],dim=3, keepdim=True)
+
         classifier = [
             nn.Linear(self.pretrained_model.fc.in_features, 17)
         ]
         self.classifier = nn.Sequential(*classifier)
         self.pretrained_model.fc = self.classifier
 
+        
     def forward(self, x):
         x = x.float()
         x = self.pretrained_model(x)

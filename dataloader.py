@@ -7,7 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
-import pdb 
 from PIL import Image
 
 def get_labels(fname):
@@ -27,7 +26,7 @@ class AmazonDataset(Dataset):
         transform (callable, optional): Optional transform to be applied
                 on a sample.
         """
-
+        #import pdb; pdb.set_trace()
         self.filenames = pd.read_csv(csv_file)
         self.root_dir = root_dir
         self.transform = transform
@@ -40,12 +39,14 @@ class AmazonDataset(Dataset):
         return len(self.filenames)
 
     def __getitem__(self,idx):
+        
+        #import pdb; pdb.set_trace()
         sample = self.filenames.iloc[int(idx)]
         img_name = sample['image_name']
         #label = sample['tags']
 
-        image = io.imread(os.path.join(self.root_dir,img_name+'.jpg'))
-
+        image = Image.open(os.path.join(self.root_dir,img_name+'.tif'))
+        
         labels = self.filenames.ix[idx, 1]
         target = torch.zeros(self.n_labels)
         label_idx = torch.LongTensor([self.labels2idx[tag] for tag in labels.split(' ')])
