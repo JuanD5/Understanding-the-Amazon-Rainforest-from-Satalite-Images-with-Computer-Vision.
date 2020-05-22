@@ -17,32 +17,32 @@ import pdb
 # Parameters
 
 ap = argparse.ArgumentParser()
-ap.add_argument("-test_size", "--test_size", type=float,default=0.2, help="Size of the test set.")
+ap.add_argument("-val_size", "--val_size", type=float,default=0.2, help="Size of the validation set.")
 args = vars(ap.parse_args())
 
-path = '/home/jlcastillo/Proyecto/Understanding-The-Amazon/Dataset/train-jpg'
+path = '/home/jlcastillo/Database_real/Copy_train_tif'
 
 
-if not  os.path.exists(os.path.join(os.getcwd(),'Split_Amazon_Dataset')):# si no existe una carpeta que se llame asi 
-        os.mkdir(os.path.join(os.getcwd(),'Split_Amazon_Dataset')) # la crea 
+if not  os.path.exists('/home/jlcastillo/Database_real/Split_train_tif'):# si no existe una carpeta que se llame asi 
+        os.mkdir('/home/jlcastillo/Database_real/Split_train_tif') # la crea 
 
 image_list=[]
 
 for filename in os.listdir(path):
     image_list.append(filename)
 
-train,test = train_test_split(image_list, train_size = 0.8 ,test_size = args["test_size"],random_state = None)
+train,val = train_test_split(image_list, train_size = 0.8 ,test_size = args["val_size"],random_state = None)
 
-pdb.set_trace()
+
 for im_train in train:
-    if not  os.path.exists(os.path.join(path,'Split_Amazon_Dataset','train')):# si no existe una carpeta que se llame asi 
-        os.mkdir(os.path.join(path,'Split_Amazon_Dataset','train')) # la crea 
-    shutil.copy2(os.path.join(path,im_train),os.path.join(path,'Split_Amazon_Dataset','train')) # copiamos las imagenes a la carpeta de train 
+    if not  os.path.exists('/home/jlcastillo/Database_real/Split_train_tif/train'):# si no existe una carpeta que se llame asi 
+        os.mkdir('/home/jlcastillo/Database_real/Split_train_tif/train') # la crea 
+    shutil.copy2(os.path.join(path,im_train),'/home/jlcastillo/Database_real/Split_train_tif/train') # copiamos las imagenes a la carpeta de train 
 
-for im_test in test:
-    if not  os.path.exists(os.path.join(path,'Split_Amazon_Dataset','test')):# si no existe una carpeta que se llame asi 
-        os.mkdir(os.path.join(path,'Split_Amazon_Dataset','test')) # la crea 
-    shutil.copy2(os.path.join(path,im_test),os.path.join(path,'Split_Amazon_Dataset','test')) # copiamos las imagenes a la carpeta de test 
+for im_val in val:
+    if not  os.path.exists('/home/jlcastillo/Database_real/Split_train_tif/val'):# si no existe una carpeta que se llame asi 
+        os.mkdir('/home/jlcastillo/Database_real/Split_train_tif/val') # la crea 
+    shutil.copy2(os.path.join(path,im_val),'/home/jlcastillo/Database_real/Split_train_tif/val') # copiamos las imagenes a la carpeta de val 
 
                 
     
