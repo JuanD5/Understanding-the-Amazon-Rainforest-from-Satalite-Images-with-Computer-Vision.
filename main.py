@@ -60,6 +60,8 @@ parser.add_argument('--log-interval', type=int, default=10, metavar='N',
                          'logging training status')
 parser.add_argument('--save', type=str, default='model.pt',
                     help='file on which to save model weights')
+parser.add_argument('--gpu', type=str, default='1',
+                    help='GPU(s) to use (default: 1)')
 parser.add_argument('--NIR_type',type = str, default= 'NDVI-calculated',
                     help = 'Representation options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated,NDWI')
 
@@ -72,80 +74,42 @@ if args.cuda:
     torch.cuda.manual_seed(args.seed)
 kwargs = {'pin_memory': True} if args.cuda else {}
 
+os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
+
 
 # -------------------------- LOADING THE DATA --------------------------
 # Data augmentation and normalization for training
 # Just normalization for validation
 
+train_transforms = transforms.Compose([
+                        transforms.ToTensor()])
+
 print("Initializing Datasets and Dataloaders...")
-data_path = '/home/jlcastillo/Proyecto/Database/Dataset/train-jpg'
+data_path = '/home/jlcastillo/Database_real/Split_train_tif/'
+
 # Create training, validation and test datasets
-train_dataset = AmazonDataset('csv/train.csv', data_path,'csv/labels.txt', args.nir_channel, transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
+train_dataset = AmazonDataset('csv/train.csv', data_path + 'train','csv/labels.txt', args.nir_channel, transform = train_transforms)
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
 
 #Val
-val_dataset = AmazonDataset('csv/val.csv', data_path,'csv/labels.txt', args.nir_channel,transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
+val_dataset = AmazonDataset('csv/val.csv', data_path + 'val','csv/labels.txt', args.nir_channel,transform = train_transforms)
 val_loader = torch.utils.data.DataLoader(train_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
-
-# TEST call your dataset function def __init__(self, csv_file, data_path, transform=None)
-test_dataset = AmazonDataset('csv/test.csv', data_path, 'csv/labels.txt',args.nir_channel,transform = transforms.Compose([Rescale((args.input_size, args.input_size)), transforms.ToTensor()]))
-test_loader = torch.utils.data.DataLoader(test_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
 
 # check the size of your datatset
 dataset_sizes = {}
 dataset_sizes['train'] = len(train_dataset)
 dataset_sizes['val'] = len(val_dataset)
-dataset_sizes['test'] = len(test_dataset)
+
 print('Training dataset size:', dataset_sizes['train'])
 print('Validation dataset size:', dataset_sizes['val'])
-print('Test dataset size:', dataset_sizes['test'])
+
 
 # -------------------------- MODEL --------------------------
 ## URL`s a los pesos
 RESNET_18 = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
 RESNET_101 = 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'
 
-"""
-model = models.resnet18(num_classes=17)
-#resnet18.classifier = [nn.Linear(resnet18.fc.in_features, 17)]
 
-#resnet101 = models.resnet101(pretrained = True, progress = True)
-
-for param in model.parameters():
-    param.requires_grad = True
-
-if args.cuda:
-    model.cuda()
-
-load_model = False
-if osp.exists(args.save):
-    with open(args.save, 'rb') as fp:
-        state = torch.load(fp)
-        model.load_state_dict(state)
-        load_model = True
-else:
-        
-    ## Cargamos los pesos pre entrenados a las redes
-    state = model_zoo.load_url(RESNET_18)
-     # eliminate fully connected layers weights (trained for 1000 categories)
-    state = {x: state[x] for x in state if not x.startswith('fc')}
-
-    # current weights (not the pretrained model)
-    model_state = model.state_dict()
-    # update state_dict with the pretrained model
-    model_state.update(state)
-    # load weights into the model
-    model.load_state_dict(model_state)
-"""
-"""
-state101 = model_zoo.load_url(RESNET_101)
-# current weights (not the pretrained model)
-model_state101 = resnet101.state_dict()
-# update state_dict with the pretrained model
-model_state101.update(state18)
-# load weights into the model
-resnet101.load_state_dict(model_state101)
-"""
 ###### Para salvar modelos y logs ##################
 # Setup folders for saved models and logs
 if not os.path.exists('saved-models/'):
@@ -176,6 +140,7 @@ configure(current_dir, flush_secs=5)
 model_names = sorted(name for name in model.__dict__
     if name.startswith("Planet")
     and callable(model.__dict__[name]))
+
 
 def train(net, loader, criterion, optimizer, verbose = False):
     net.train()
