@@ -4,6 +4,8 @@ from torchvision import models
 import utils
 import pdb
 from torchsummary import summary
+import torch
+import torch.utils.model_zoo as model_zoo
 
 class AmazonSimpleNet(nn.Module):
     """Simple convnet """
@@ -68,11 +70,26 @@ class AmazonResNet101(nn.Module):
 
     def __init__(self):
         super(AmazonResNet101,self).__init__()
-       
+        # Mean of weights:
+        model = models.resnet101(num_classes=17)
+
+        RESNET_101 = 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'
+        state = model_zoo.load_url(RESNET_101)
+        mean_weights = torch.mean(state['conv1.weight'],dim=3, keepdim=True)
+
+
         self.pretrained_model = models.resnet101(pretrained=True)
         #Para cuatro canales:
         self.pretrained_model.conv1 = nn.Conv2d(4, 64, kernel_size=(7, 7), stride=1,padding=(3, 3), bias=False)
-        #state['conv1.weight'] = torch.mean(state['conv1.weight'],dim=3, keepdim=True)
+        
+        with torch.no_grad():
+            self.pretrained_model.conv1.weight[:, :3] = mean_weights
+            self.pretrained_model.conv1.weight[:, 3] = self.pretrained_model.conv1.weight[:, 0]
+    
+        #x = torch.randn(10, 4, 224, 224)
+        #output = model(x)
+
+        #new_input_conv.weight = nn.Parameter(new_input_conv.weight.detach().requires_grad_(True))
 
         classifier = [
             nn.Linear(self.pretrained_model.fc.in_features, 17)

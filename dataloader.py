@@ -25,11 +25,10 @@ class AmazonDataset(Dataset):
         Args: 
         csv_file (string): Path to the csv file with annotations.
         root_dir (string): Directory with all the images.
-        nir_channel(string): Kind of NIR 4th channel desired - options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated,NDWI
+        nir_channel(string): Type of NIR 4th channel desired - options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated,NDWI
         transform (callable, optional): Optional transform to be applied
                 on a sample.
         """
-        #import pdb; pdb.set_trace()
         self.filenames = pd.read_csv(csv_file)
         self.root_dir = root_dir
         self.nir_channel = nir_channel
@@ -43,16 +42,16 @@ class AmazonDataset(Dataset):
         return len(self.filenames)
 
     def __getitem__(self,idx):
-        
-        #import pdb; pdb.set_trace()
+
         sample = self.filenames.iloc[int(idx)]
         img_name = sample['image_name']
         #label = sample['tags']
 
         #image = Image.open(os.path.join(self.root_dir,img_name+'.tif'))
         
-        rgb_image, nir_image = infrared_channel_converter(os.path.join(self.root_dir,img_name+'.tif'), nir_channel)
-        image = np.concatenate((rgb_image,nir_image), axis = 2)
+        rgb_image, nir_image = infrared_channel_converter(os.path.join(self.root_dir,img_name+'.tif'), self.nir_channel)
+
+        image = np.dstack((rgb_image,nir_image))
 
 
         labels = self.filenames.ix[idx, 1]
@@ -82,7 +81,7 @@ class TestAmazonDataset(Dataset):
     def __getitem__(self, idx):
         img_name = os.path.join(self.root_dir, self.data.ix[idx, 0]+'.tif')
         #img = Image.open(img_name + '.jpg').convert('RGB')
-        rgb_image, nir_image = infrared_channel_converter(img_name,nir_channel)
+        rgb_image, nir_image = infrared_channel_converter(img_name,self.nir_channel)
         img = np.concatenate((rgb_image,nir_image), axis = 2)
 
         labels = self.data.ix[idx, 1]

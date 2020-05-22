@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 import pdb 
+import debug 
 
 import copy
 import time
@@ -34,7 +35,7 @@ from sklearn.metrics import fbeta_score
 # Argumentos
 
 parser = argparse.ArgumentParser(description='PyTorch resnet18 for Image Multiclassification')
-parser.add_argument("--model", type=str, default='AmazonSimpleNet', help="model: AmazonSimpleNet")
+parser.add_argument("--model", type=str, default='AmazonResNet101', help="model: AmazonResNet101")
 parser.add_argument('--batch-size', type=int, default=32, metavar='N',
                     help='input batch size for training (default: 32)')
 parser.add_argument('--test-batch-size', type=int, default=128, metavar='N',
@@ -62,7 +63,7 @@ parser.add_argument('--save', type=str, default='model.pt',
                     help='file on which to save model weights')
 parser.add_argument('--gpu', type=str, default='1',
                     help='GPU(s) to use (default: 1)')
-parser.add_argument('--NIR_type',type = str, default= 'NDVI-calculated',
+parser.add_argument('--nir_channel',type = str, default= 'NDVI-calculated',
                     help = 'Representation options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated,NDWI')
 
 args = parser.parse_args()
@@ -85,14 +86,14 @@ train_transforms = transforms.Compose([
                         transforms.ToTensor()])
 
 print("Initializing Datasets and Dataloaders...")
-data_path = '/home/jlcastillo/Database_real/Split_train_tif/'
+data_path = '/home/jlcastillo/Database_real/train-tif-v2'
 
 # Create training, validation and test datasets
-train_dataset = AmazonDataset('csv/train.csv', data_path + 'train','csv/labels.txt', args.nir_channel, transform = train_transforms)
+train_dataset = AmazonDataset('csv/train.csv', data_path,'csv/labels.txt', args.nir_channel, transform = train_transforms)
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
 
 #Val
-val_dataset = AmazonDataset('csv/val.csv', data_path + 'val','csv/labels.txt', args.nir_channel,transform = train_transforms)
+val_dataset = AmazonDataset('csv/val.csv', data_path,'csv/labels.txt', args.nir_channel,transform = train_transforms)
 val_loader = torch.utils.data.DataLoader(train_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
 
 # check the size of your datatset
@@ -108,6 +109,7 @@ print('Validation dataset size:', dataset_sizes['val'])
 ## URL`s a los pesos
 RESNET_18 = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
 RESNET_101 = 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'
+
 
 
 ###### Para salvar modelos y logs ##################
@@ -153,11 +155,13 @@ def train(net, loader, criterion, optimizer, verbose = False):
         X, y = Variable(X), Variable(y)
 
         output = net(X)
+        #output = sigmoid(output)
+        
         loss = criterion(output, y)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        #pdb.set_trace()
+
         running_loss += loss.item()                                     
         acc = utils.get_multilabel_accuracy(output, y)
         running_accuracy += acc
