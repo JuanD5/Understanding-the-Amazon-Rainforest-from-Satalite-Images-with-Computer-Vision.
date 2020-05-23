@@ -7,7 +7,9 @@ import os
 from spectral import *
 from skimage import io
 from sklearn.preprocessing import MinMaxScaler
-
+import matplotlib
+matplotlib.use('agg')
+import pylab as plt
 
 ##INFRARED UTILS
 
@@ -38,11 +40,15 @@ def infrared_channel_converter(path,kind = 'NDVI-calculated' ):
 
     return img_rgb,inf_out
 
-root_dir = os.path.join(os.getcwd(), 'imagenes_prueba')
-img_name = 'train_3'
+root_dir = os.path.join(os.getcwd(), '../imagenes_prueba')
+img_name = 'train_0'
 nir_channel = 'NIR-R-B'
 
-image = Image.open(os.path.join(root_dir,img_name+'.tif'))
-pdb.set_trace()        
+image = Image.open(os.path.join(root_dir,img_name+'.tif'))  
 rgb_image, nir_image = infrared_channel_converter(os.path.join(root_dir,img_name+'.tif'), nir_channel)
+plt.imshow(rgb_image)
+plt.savefig('a.png')
+plt.imshow(nir_image)
+
+plt.savefig('b.png')
 image = np.dstack((rgb_image,nir_image))

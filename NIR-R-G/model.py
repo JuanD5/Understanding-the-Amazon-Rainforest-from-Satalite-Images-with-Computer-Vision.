@@ -52,16 +52,17 @@ class AmazonResNet18(nn.Module):
     def __init__(self):
         super(AmazonResNet18,self).__init__()
         # Mean of weights:
+        self.pretrained_model = models.resnet18(pretrained=True)
+        """
         model = models.resnet18(num_classes=17)
 
         RESNET_18 = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
         state = model_zoo.load_url(RESNET_18)
         mean_weights = torch.mean(state['conv1.weight'],dim=3, keepdim=True)
 
-
         self.pretrained_model = models.resnet18(pretrained=True)
         #Para cuatro canales:
-        self.pretrained_model.conv1 = nn.Conv2d(4, 64, kernel_size=(7, 7), stride=1,padding=(3, 3), bias=False)
+        self.pretrained_model.conv1 = nn.Conv2d(6, 64, kernel_size=(7, 7), stride=1,padding=(3, 3), bias=False)
         
         with torch.no_grad():
             self.pretrained_model.conv1.weight[:, :3] = mean_weights
@@ -71,7 +72,7 @@ class AmazonResNet18(nn.Module):
         #output = model(x)
 
         #new_input_conv.weight = nn.Parameter(new_input_conv.weight.detach().requires_grad_(True))
-
+        """
         classifier = [
             nn.Linear(self.pretrained_model.fc.in_features, 17)
         ]
@@ -91,14 +92,16 @@ class AmazonResNet101(nn.Module):
     def __init__(self):
         super(AmazonResNet101,self).__init__()
         # Mean of weights:
+        """
         model = models.resnet101(num_classes=17)
 
         RESNET_101 = 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'
         state = model_zoo.load_url(RESNET_101)
         mean_weights = torch.mean(state['conv1.weight'],dim=3, keepdim=True)
-
+        """
 
         self.pretrained_model = models.resnet101(pretrained=True)
+        """
         #Para cuatro canales:
         self.pretrained_model.conv1 = nn.Conv2d(4, 64, kernel_size=(7, 7), stride=1,padding=(3, 3), bias=False)
         
@@ -110,7 +113,7 @@ class AmazonResNet101(nn.Module):
         #output = model(x)
 
         #new_input_conv.weight = nn.Parameter(new_input_conv.weight.detach().requires_grad_(True))
-
+        """
         classifier = [
             nn.Linear(self.pretrained_model.fc.in_features, 17)
         ]

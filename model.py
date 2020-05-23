@@ -83,6 +83,23 @@ class AmazonResNet18(nn.Module):
         x = self.pretrained_model(x)
         return F.sigmoid(x)
 
+class AmazonNIRResNet18(nn.Module):
+
+    """ Resnet 18 pretrained"""
+
+    def __init__(self):
+        super(AmazonNIRResNet18,self).__init__()
+        self.pretrained_model = models.resnet18(pretrained=True)
+        classifier = [
+            nn.Linear(self.pretrained_model.fc.in_features, 17)
+        ]
+        self.classifier = nn.Sequential(*classifier)
+        self.pretrained_model.fc = self.classifier
+    
+    def forward(self, x):
+        x = x.float()
+        x = self.pretrained_model(x)
+        return F.sigmoid(x)
 
 class AmazonResNet101(nn.Module):
 

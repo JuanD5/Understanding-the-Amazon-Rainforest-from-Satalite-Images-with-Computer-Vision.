@@ -31,7 +31,9 @@ print('...predicting on cuda: {}'.format(cuda))
 # If using pretrained models normalization should also be added.
 # normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                     #  std=[0.229, 0.224, 0.225])
-test_transforms = transforms.Compose([transforms.ToTensor()])
+test_transforms = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.485, 0.456, 0.406,0.5], std=[0.229, 0.224, 0.225,0.25])])
 #val_transforms = transforms.Compose([transforms.Scale(args.scale),
 #                        transforms.ToTensor()])
 
@@ -42,12 +44,6 @@ testset = AmazonDataset('csv/sample_submission_v2.csv', '/home/jlcastillo/Databa
 test_loader = DataLoader(testset, batch_size=args.batch_size,
                         shuffle=False, num_workers=args.nworkers, **kwargs)
 
-"""
-valset = data.PlanetData('data/val_set_norm.csv', 'data/train-jpg',
-                'data/labels.txt', val_transforms)
-val_loader = DataLoader(valset, batch_size=args.batch_size,
-                        shuffle=False, num_workers=args.nworkers, **kwargs)
-"""
 
 def fscore(prediction):
     """ Get the fscore of the validation set. Gives a good indication

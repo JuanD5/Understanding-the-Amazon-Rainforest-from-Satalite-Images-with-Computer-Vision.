@@ -45,15 +45,13 @@ class AmazonDataset(Dataset):
 
         sample = self.filenames.iloc[int(idx)]
         img_name = sample['image_name']
-
+        #label = sample['tags']
 
         #image = Image.open(os.path.join(self.root_dir,img_name+'.tif'))
         rgb_image, nir_image = infrared_channel_converter(os.path.join(self.root_dir,img_name+'.tif'), self.nir_channel)
-        if self.nir_channel == 'NIR-R-G' or self.nir_channel == 'NIR-R-B':
-            image = nir_image
-        else: 
-            image = np.dstack((rgb_image,nir_image))
 
+        #image = np.dstack((rgb_image,nir_image))
+        image = nir_image
         labels = self.filenames.ix[idx, 1]
         target = torch.zeros(self.n_labels)
         label_idx = torch.LongTensor([self.labels2idx[tag] for tag in labels.split(' ')])
@@ -63,7 +61,7 @@ class AmazonDataset(Dataset):
             image = self.transform(image)
         
         return image, target
-"""
+
 class TestAmazonDataset(Dataset):
 
     def __init__(self, csv_file, root_dir, labels_file, nir_channel,transform=None):
@@ -92,7 +90,7 @@ class TestAmazonDataset(Dataset):
             img = self.transform(img)
         return img, target
 
-"""
+
 class Rescale(object):
     """Rescale the image in a sample to a given size.
 

@@ -38,14 +38,14 @@ from tqdm.auto import trange
 # Argumentos
 
 parser = argparse.ArgumentParser(description='PyTorch resnet18 for Image Multiclassification')
-parser.add_argument("--model", type=str, default='AmazonResNet101', help="model: AmazonResNet101")
-parser.add_argument('--batch-size', type=int, default=32, metavar='N',
+parser.add_argument("--model", type=str, default='AmazonResNet18', help="model: AmazonResNet101")
+parser.add_argument('--batch-size', type=int, default=8, metavar='N',
                     help='input batch size for training (default: 32)')
 parser.add_argument('--test-batch-size', type=int, default=128, metavar='N',
                     help='input batch size for testing (default: 128)')
-parser.add_argument('--epochs', type=int, default=15, metavar='N',
+parser.add_argument('--epochs', type=int, default=20, metavar='N',
                     help='number of epochs to train (default: 15)')
-parser.add_argument('--lr', type=float, default=0.01, metavar='LR',
+parser.add_argument('--lr', type=float, default=0.001, metavar='LR',
                     help='learning rate (default: 0.01)')
 parser.add_argument("-v", action='store_true', help="verbose")
 parser.add_argument('--momentum', type=float, default=0.5, metavar='M',
@@ -66,7 +66,7 @@ parser.add_argument('--save', type=str, default='model.pt',
                     help='file on which to save model weights')
 parser.add_argument('--gpu', type=str, default='1',
                     help='GPU(s) to use (default: 1)')
-parser.add_argument('--nir_channel',type = str, default= 'NDVI-calculated',
+parser.add_argument('--nir_channel',type = str, default= 'NIR-R-G',
                     help = 'Representation options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated,NDWI')
 
 args = parser.parse_args()
@@ -87,17 +87,17 @@ os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
 
 train_transforms = transforms.Compose([
                 transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406,0.5], std=[0.229, 0.224, 0.225,0.25])])
+                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
 print("Initializing Datasets and Dataloaders...")
 data_path = '/home/jlcastillo/Database_real/train-tif-v2'
 
 # Create training, validation and test datasets
-train_dataset = AmazonDataset('csv/train.csv', data_path,'csv/labels.txt', args.nir_channel, transform = train_transforms)
+train_dataset = AmazonDataset('../csv/train.csv', data_path,'../csv/labels.txt', args.nir_channel, transform = train_transforms)
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
 
 #Val
-val_dataset = AmazonDataset('csv/val.csv', data_path,'csv/labels.txt', args.nir_channel,transform = train_transforms)
+val_dataset = AmazonDataset('../csv/val.csv', data_path,'../csv/labels.txt', args.nir_channel,transform = train_transforms)
 val_loader = torch.utils.data.DataLoader(train_dataset, batch_size = args.batch_size, shuffle = True, num_workers = 4)
 
 # check the size of your datatset
@@ -118,23 +118,23 @@ RESNET_101 = 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'
 
 ###### Para salvar modelos y logs ##################
 # Setup folders for saved models and logs
-if not os.path.exists('saved-models/'):
-    os.mkdir('saved-models/')
-if not os.path.exists('logs/'):
-    os.mkdir('logs/')
+if not os.path.exists('../saved-models/'):
+    os.mkdir('../saved-models/')
+if not os.path.exists('../logs/'):
+    os.mkdir('../logs/')
 
 # Setup tensorboard folders. Each run must have it's own folder. Creates
 # a logs folder for each model and each run.
-out_dir = 'logs/{}'.format(args.model)
+out_dir = '../logs/{}'.format(args.model)
 if not os.path.exists(out_dir):
     os.mkdir(out_dir)
 run = 0
-current_dir = '{}/run-{}'.format(out_dir, run)
+current_dir = '{}/../run-{}'.format(out_dir, run)
 while os.path.exists(current_dir):
 	run += 1
-	current_dir = '{}/run-{}'.format(out_dir, run)
+	current_dir = '{}/../run-{}'.format(out_dir, run)
 os.mkdir(current_dir)
-logfile = open('{}/log.txt'.format(current_dir), 'w')
+logfile = open('{}/../log.txt'.format(current_dir), 'w')
 print(args, file=logfile)
 
 # Tensorboard viz. tensorboard --logdir {yourlogdir}. Requires tensorflow.
@@ -242,7 +242,7 @@ if __name__ == '__main__':
             utils.save_model({
                 'arch': args.model,
                 'state_dict': net.state_dict()
-            }, 'saved-models/{}-run-{}.pth.tar'.format(args.model, run))
+            }, '../saved-models/{}-run-{}.pth.tar'.format(args.model, run))
         else:
             patience -= 1
             if patience == 0:

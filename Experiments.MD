@@ -10,7 +10,8 @@ Lista para acceder mas rápido a cada uno:
 4. [ResNet101](#run4): Modelo pre-entrenado. 
 5. [ResNet101](#run5): Modelo pre-entrenado en más épocas (40). **Evaluado.**
 6. [ResNet101](#run6): Modelo pre-entrenado, sin validar. **Evaluado.**
-7. [ResNet18](#run7): Modelo pre-entrenado, validando y usando infrarrojo. **Corriendo.**
+7. [ResNet18](#run7): Modelo pre-entrenado, validando y usando infrarrojo.  **Evaluado.**
+8. [ResNet18 NIR-R-G](#run8) : Modelo pre-entrenado, validando y usando infrarrojo.  **Corriendo.**
 
 ### - [Baseline](#up):
 
@@ -204,11 +205,11 @@ Base de datos de train (80%) y Validación (20%). Canal de infrarrojo: NDVI-spec
 
 Nombre del modelo: `AmazonResNet18-run-0.pth.tar`
 
-Nombre de la carpeta del logfile: `AmazonResNet101/run-0`
+Nombre de la carpeta del logfile: `AmazonResNet18/run-0`
 
 Archivo de predicción: 
 
-F-score: **Oficial:** 
+F-score: **Oficial:** 0.78410
 
 **Parámetros:**
 
@@ -228,3 +229,34 @@ F-score: **Oficial:**
 + [--save SAVE] model.pt
 + --NVDI channel: NDVI-spectral
 
+### - [ResNet18 pre-entrenado, validando, usando infrarrojo NIR-R-G](#up)
+
+<a name="run7"></a>
+
+Base de datos de train (80%) y Validación (20%). Canal de infrarrojo: NIR-R-G.
+
+Nombre del modelo: `AmazonNIRResNet18-run-0.pth.tar`
+
+Nombre de la carpeta del logfile: `AmazonNIRResNet18/run-0`
+
+Archivo de predicción: 
+
+F-score: **Oficial:** 
+
+**Parámetros:**
+
++ --model MODEL] AmazonNIRResNet18
++ [--batch-size N]  8
++ [--test-batch-size N] 128
++ [--epochs N] 20
++ [--lr LR]  0.001
++ *[-v]*
++ [--momentum M] 0.5
++ [--gamma M] 2
++ [--patience PATIENCE] 20
++ [--input_size N] 256 
++ *[--no_cuda]*
++ [--seed S] 1
++ [--log-interval N] 10
++ [--save SAVE] model.pt
++ --NVDI channel: NIR-R-G
