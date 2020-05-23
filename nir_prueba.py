@@ -40,9 +40,9 @@ def infrared_channel_converter(path,kind = 'NDVI-calculated' ):
 
 root_dir = os.path.join(os.getcwd(), 'imagenes_prueba')
 img_name = 'train_3'
-nir_channel = 'NDVI-calculated'
+nir_channel = 'NIR-R-B'
 
 image = Image.open(os.path.join(root_dir,img_name+'.tif'))
-        
+pdb.set_trace()        
 rgb_image, nir_image = infrared_channel_converter(os.path.join(root_dir,img_name+'.tif'), nir_channel)
 image = np.dstack((rgb_image,nir_image))

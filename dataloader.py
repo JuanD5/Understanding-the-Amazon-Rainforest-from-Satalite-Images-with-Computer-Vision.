@@ -48,12 +48,9 @@ class AmazonDataset(Dataset):
         #label = sample['tags']
 
         #image = Image.open(os.path.join(self.root_dir,img_name+'.tif'))
-        
         rgb_image, nir_image = infrared_channel_converter(os.path.join(self.root_dir,img_name+'.tif'), self.nir_channel)
 
         image = np.dstack((rgb_image,nir_image))
-
-
         labels = self.filenames.ix[idx, 1]
         target = torch.zeros(self.n_labels)
         label_idx = torch.LongTensor([self.labels2idx[tag] for tag in labels.split(' ')])

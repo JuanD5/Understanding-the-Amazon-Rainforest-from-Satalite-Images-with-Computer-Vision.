@@ -1,4 +1,4 @@
-Namespace(batch_size=4, cuda=True, epochs=20, gamma=2, gpu='1', input_size=256, log_interval=10, lr=0.001, model='AmazonResNet18', momentum=0.5, nir_channel='NDVI-spectral', no_cuda=False, patience=20, save='model.pt', seed=1, test_batch_size=128, v=False)
+Namespace(batch_size=4, cuda=True, epochs=20, gamma=2, gpu='1', input_size=256, log_interval=10, lr=0.001, model='AmazonResNet18', momentum=0.5, nir_channel='NIR-R-G', no_cuda=False, patience=20, save='model.pt', seed=1, test_batch_size=128, v=False)
 AmazonResNet18(
   (pretrained_model): ResNet(
     (conv1): Conv2d(4, 64, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
@@ -90,63 +90,3 @@ AmazonResNet18(
     (0): Linear(in_features=512, out_features=17, bias=True)
   )
 )
-Epoch: 0	 train loss: 0.179, train acc: 0.931	
-                val loss: 0.150, val acc: 0.944	 fscore: 0.862	
-                time: 2076.4s
-Epoch: 1	 train loss: 0.149, train acc: 0.945	
-                val loss: 0.130, val acc: 0.953	 fscore: 0.883	
-                time: 2183.5s
-Epoch: 2	 train loss: 0.139, train acc: 0.950	
-                val loss: 0.124, val acc: 0.954	 fscore: 0.890	
-                time: 2076.8s
-Epoch: 3	 train loss: 0.133, train acc: 0.952	
-                val loss: 0.121, val acc: 0.957	 fscore: 0.892	
-                time: 2078.6s
-Epoch: 4	 train loss: 0.127, train acc: 0.954	
-                val loss: 0.116, val acc: 0.958	 fscore: 0.896	
-                time: 2076.3s
-Epoch: 5	 train loss: 0.122, train acc: 0.956	
-                val loss: 0.115, val acc: 0.959	 fscore: 0.901	
-                time: 2074.7s
-Epoch: 6	 train loss: 0.119, train acc: 0.957	
-                val loss: 0.112, val acc: 0.960	 fscore: 0.900	
-                time: 2073.6s
-Epoch: 7	 train loss: 0.115, train acc: 0.958	
-                val loss: 0.110, val acc: 0.959	 fscore: 0.903	
-                time: 2078.0s
-Epoch: 8	 train loss: 0.113, train acc: 0.959	
-                val loss: 0.114, val acc: 0.958	 fscore: 0.901	
-                time: 2074.2s
-Epoch: 9	 train loss: 0.109, train acc: 0.960	
-                val loss: 0.106, val acc: 0.962	 fscore: 0.909	
-                time: 2072.5s
-Epoch: 10	 train loss: 0.107, train acc: 0.961	
-                val loss: 0.102, val acc: 0.963	 fscore: 0.911	
-                time: 2070.8s
-Epoch: 11	 train loss: 0.104, train acc: 0.962	
-                val loss: 0.101, val acc: 0.964	 fscore: 0.913	
-                time: 2083.0s
-Epoch: 12	 train loss: 0.102, train acc: 0.963	
-                val loss: 0.096, val acc: 0.965	 fscore: 0.915	
-                time: 2077.4s
-Epoch: 13	 train loss: 0.100, train acc: 0.963	
-                val loss: 0.095, val acc: 0.966	 fscore: 0.918	
-                time: 2081.6s
-Epoch: 14	 train loss: 0.098, train acc: 0.964	
-                val loss: 0.092, val acc: 0.967	 fscore: 0.923	
-                time: 2073.8s
-Epoch: 15	 train loss: 0.095, train acc: 0.965	
-                val loss: 0.089, val acc: 0.968	 fscore: 0.924	
-                time: 2075.9s
-Epoch: 16	 train loss: 0.091, train acc: 0.967	
-                val loss: 0.089, val acc: 0.969	 fscore: 0.924	
-                time: 2077.1s
-Epoch: 17	 train loss: 0.089, train acc: 0.968	
-                val loss: 0.083, val acc: 0.970	 fscore: 0.929	
-                time: 2074.2s
-Epoch: 18	 train loss: 0.085, train acc: 0.969	
-                val loss: 0.081, val acc: 0.972	 fscore: 0.932	
-                time: 2075.8s
-Epoch: 19	 train loss: 0.082, train acc: 0.970	
-                val loss: 0.074, val acc: 0.974	 fscore: 0.940	
-                time: 2075.8s
