@@ -52,7 +52,7 @@ parser.add_argument('--momentum', type=float, default=0.5, metavar='M',
                     help='SGD momentum (default: 0.5)')
 parser.add_argument('--gamma', type=float, default=2, metavar='M',
                     help='learning rate decay factor (default: 0.5)')
-parser.add_argument("--patience", type=int, default=10, help="early stopping patience")                    
+parser.add_argument("--patience", type=int, default=20, help="early stopping patience")                    
 parser.add_argument('--input_size', type=int, default=256, metavar='N',
                     help='Input image size (default: 256)')
 parser.add_argument('--no_cuda', action='store_true', default=False,

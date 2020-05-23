@@ -1,6 +1,7 @@
 ## Archivos de importación
 *.pyc
+baseline/*.pyc
 
-## Caspertas
+## Carpetas
 saved-models/
 

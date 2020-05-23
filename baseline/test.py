@@ -10,11 +10,12 @@ from sklearn.metrics import fbeta_score
 import pandas as pd
 from dataloader import TestAmazonDataset
 import dataloader 
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", type=str, help="saved model")
 parser.add_argument("--batch_size", type=int, default=64, help="batch size")
-parser.add_argument("--scale", type=int, default=224, help="image scaling")
+parser.add_argument("--scale", type=int, default=256, help="image scaling")
 parser.add_argument("--nocuda", action='store_true', help="no cuda used")
 parser.add_argument("--nworkers", type=int, default=0, help="number of workers")
 parser.add_argument("--output_file", type=str, default="pred.csv", help="output file")
@@ -34,8 +35,8 @@ test_transforms = transforms.Compose([transforms.Scale(args.scale),
 
 # Create dataloaders
 kwargs = {'pin_memory': True} if cuda else {}
-testset = TestAmazonDataset('csv/sample_submission_v2.csv', '/home/jlcastillo/Database_real/test_full/',
-                'csv/labels.txt', test_transforms)
+testset = TestAmazonDataset('../csv/sample_submission_v2.csv', '/home/jlcastillo/Database_real/test_full/',
+                '../csv/labels.txt', test_transforms)
 test_loader = DataLoader(testset, batch_size=args.batch_size,
                         shuffle=False, num_workers=args.nworkers, **kwargs)
 
@@ -59,7 +60,7 @@ def fscore(prediction):
 def predict(net, loader):
     net.eval()
     predictions = torch.FloatTensor(0, 17)
-    for i, (X,_) in enumerate(loader):
+    for i, (X,_) in enumerate(tqdm(loader,desc='Predict')):
         if cuda:
             X = X.cuda()
         X = Variable(X, volatile=True)
@@ -79,19 +80,19 @@ if __name__ == '__main__':
     y_test = predict(net, test_loader)
 
     # Ready dataframe for submission.
-    labels, _, _ = dataloader.get_labels('csv/labels.txt')
+    labels, _, _ = dataloader.get_labels('../csv/labels.txt')
     y_test = y_test.numpy()
     y_test = pd.DataFrame(y_test, columns = labels)
 
     # Populate the submission csv
     predictions = []
-    for i in range(y_test.shape[0]):
+    for i in tqdm(range(y_test.shape[0]),desc='Main'):
         a = y_test.ix[[i]]
         a = a.apply(lambda x: x > 0.24, axis=1)
         a = a.transpose()
         a = a.loc[a[i] == True]
         ' '.join(list(a.index))
         predictions.append(' '.join(list(a.index)))
-    df_test = pd.read_csv('csv/sample_submission_v2.csv')
+    df_test = pd.read_csv('../csv/sample_submission_v2.csv')
     df_test['tags'] = pd.Series(predictions).values
     df_test.to_csv(args.output_file, index=False)
