@@ -2,8 +2,6 @@
 
 <a name="up"></a>
 
-Lista para acceder mas rápido a cada uno:
-
 1. [Baseline](#run1): Nuestro baseline. **Evaluado.**
 2. [Baseline ResNet](#run2): Nuestro baseline con pesos pre-entrenados de ResNet-18. Corrió hasta la época 8.
 3. [Baseline ResNet](#run3): Nuestro baseline con pesos pre-entrenados de ResNet-18. Este sí corrió completo. **Evaluado.**
