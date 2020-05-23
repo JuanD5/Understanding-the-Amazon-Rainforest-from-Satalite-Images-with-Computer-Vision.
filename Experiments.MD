@@ -231,7 +231,7 @@ F-score: **Oficial:** 0.78410
 
 ### - [ResNet18 pre-entrenado, validando, usando infrarrojo NIR-R-G](#up)
 
-<a name="run7"></a>
+<a name="run8"></a>
 
 Base de datos de train (80%) y Validación (20%). Canal de infrarrojo: NIR-R-G.
 
