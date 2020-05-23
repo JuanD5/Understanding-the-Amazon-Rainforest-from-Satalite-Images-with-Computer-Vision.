@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 import pdb 
-import debug 
+#import debug 
 
 import copy
 import time
@@ -31,6 +31,9 @@ import model
 import utils
 from tensorboard_logger import configure, log_value
 from sklearn.metrics import fbeta_score
+
+from tqdm import tqdm
+from tqdm.auto import trange
 
 # Argumentos
 
@@ -148,15 +151,15 @@ def train(net, loader, criterion, optimizer, verbose = False):
     net.train()
     running_loss = 0
     running_accuracy = 0
-
-    for i, (X,y) in enumerate(loader):
+    for i, (X,y) in enumerate(tqdm(loader,desc='Train')):
         if args.cuda:
             X, y = X.cuda(), y.cuda()
         X, y = Variable(X), Variable(y)
 
         output = net(X)
         #output = sigmoid(output)
-        
+        #if i ==76:
+        #    pdb.set_trace()
         loss = criterion(output, y)
         optimizer.zero_grad()
         loss.backward()
@@ -179,7 +182,7 @@ def validate(net, loader, criterion):
     running_accuracy = 0
     targets = torch.FloatTensor(0,17) # For fscore calculation
     predictions = torch.FloatTensor(0,17)
-    for i, (X,y) in enumerate(loader):
+    for i, (X,y) in enumerate(tqdm(loader,desc='Val')):
         if args.cuda:
             X, y = X.cuda(), y.cuda()
         X, y = Variable(X, volatile=True), Variable(y)

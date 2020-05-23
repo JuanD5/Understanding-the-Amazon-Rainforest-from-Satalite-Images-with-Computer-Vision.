@@ -10,8 +10,7 @@ Lista para acceder mas rápido a cada uno:
 4. [ResNet101](#run4): Modelo pre-entrenado. 
 5. [ResNet101](#run5): Modelo pre-entrenado en más épocas. 
 6. [ResNet101](#run6): Modelo pre-entrenado, sin validar.
-
-
+7. [ResNet101](#run7): Modelo pre-entrenado, validando y usando infrarrojo. 
 
 ### - [Baseline](#up):
 
@@ -153,7 +152,7 @@ F-score: **Oficial:** 0.84604
 + [--batch-size N]  8
 + [--test-batch-size N] 128
 + [--epochs N] 40
-+ [--lr LR]  0.001
++ [--lr LR]  0.01
 + *[-v]*
 + [--momentum M] 0.5
 + [--gamma M] 2
@@ -164,24 +163,24 @@ F-score: **Oficial:** 0.84604
 + [--log-interval N] 10
 + [--save SAVE] model.pt
 
-### - [ResNet101 pre-entrenado sin validar](#up)
+### - [ResNet101 pre-entrenado, validando, usando infrarrojo](#up)
 
-<a name="run6"></a>
+<a name="run7"></a>
 
-Base de datos de train completa.
+Base de datos de train (80%) y Validación (20%). Canal de infrarrojo: NDVI-spectral.
 
-Nombre del modelo: `AmazonResNet101-run-2.pth.tar`
+Nombre del modelo: `AmazonResNet101-run-3.pth.tar`
 
-Nombre de la carpeta del logfile: `AmazonResNet101/run-2`
+Nombre de la carpeta del logfile: `AmazonResNet101/run-3`
 
-Archivo de predicción: `pred_40epochs.cvs`
+Archivo de predicción: 
 
-F-score: **Oficial:** 0.89468
+F-score: **Oficial:** 
 
 **Parámetros:**
 
 + --model MODEL] AmazonResNet101
-+ [--batch-size N]  8
++ [--batch-size N]  4
 + [--test-batch-size N] 128
 + [--epochs N] 40
 + [--lr LR]  0.001
@@ -194,3 +193,5 @@ F-score: **Oficial:** 0.89468
 + [--seed S] 1
 + [--log-interval N] 10
 + [--save SAVE] model.pt
++ --NVDI channel: NDVI-spectral
+
