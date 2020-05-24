@@ -8,7 +8,6 @@ import utils
 import argparse
 from sklearn.metrics import fbeta_score
 import pandas as pd
-from dataloader import TestAmazonDataset
 from dataloader import AmazonDataset
 import dataloader 
 from tqdm import tqdm
@@ -33,7 +32,7 @@ print('...predicting on cuda: {}'.format(cuda))
                                     #  std=[0.229, 0.224, 0.225])
 test_transforms = transforms.Compose([
                 transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406,0.5], std=[0.229, 0.224, 0.225,0.25])])
+                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 #val_transforms = transforms.Compose([transforms.Scale(args.scale),
 #                        transforms.ToTensor()])
 
