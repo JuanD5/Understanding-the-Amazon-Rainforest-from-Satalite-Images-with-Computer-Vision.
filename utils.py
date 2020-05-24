@@ -84,11 +84,29 @@ def get_multilabel_accuracy(pred, target):
     acc = r.float().cpu().sum().item()
     return acc/(pred.size()[1]*pred.size()[0])
 
-def save_model(model_state, filename):
+def save_model(model_state,filename):
     """ Save model """
     # TODO: add it as checkpoint
     torch.save(model_state,filename)
 
+
+def load_checkpoint(model, optimizer, losslogger, filename='checkpoint.pth.tar'):
+    # Note: Input model & optimizer should be pre-defined.  This routine only updates their states.
+    start_epoch = 0
+    if os.path.isfile(filename):
+        print("=> loading checkpoint '{}'".format(filename))
+        checkpoint = torch.load(filename)
+        start_epoch = checkpoint['epoch']
+        model.load_state_dict(checkpoint['state_dict'])
+        optimizer.load_state_dict(checkpoint['optimizer'])
+        losslogger = checkpoint['losslogger']
+        print("=> loaded checkpoint '{}' (epoch {})"
+                  .format(filename, checkpoint['epoch']))
+    else:
+        print("=> no checkpoint found at '{}'".format(filename))
+
+    return model, optimizer, start_epoch, losslogger
+    
 def adjust_learning_rate(lr0,optimizer, gamma, step):
     """Sets the learning rate to the initial LR decayed
        by 10 at every specified step
@@ -182,5 +200,10 @@ def infrared_channel_converter(path,kind = 'NDVI-calculated' ):
         inf_out = (RG[:, :, 0] - RG[:, :, 1]) / (RG[:, :, 0] + RG[:, :, 1]) # (NIR - RED) / (NIR + RED)
     if (kind == 'NDWI'):
         inf_out = (RG[:, :, 2] - RG[:, :, 0]) / (RG[:, :, 2] + RG[:, :, 0]) # (GREEN - NIR) / (GREEN + NIR)
+    if (kind == 'NIR-combined'):
+        spectral = ndvi(img, 2, 3)
+        calculated = (RG[:, :, 0] - RG[:, :, 1]) / (RG[:, :, 0] + RG[:, :, 1])
+        ndwi = (RG[:, :, 2] - RG[:, :, 0]) / (RG[:, :, 2] + RG[:, :, 0])
+        inf_out = np.dstack((spectral,calculated,ndwi))
 
     return img_rgb,inf_out

@@ -49,7 +49,7 @@ class AmazonDataset(Dataset):
 
         #image = Image.open(os.path.join(self.root_dir,img_name+'.tif'))
         rgb_image, nir_image = infrared_channel_converter(os.path.join(self.root_dir,img_name+'.tif'), self.nir_channel)
-        if self.nir_channel == 'NIR-R-G' or self.nir_channel == 'NIR-R-B':
+        if self.nir_channel == 'NIR-R-G' or self.nir_channel == 'NIR-R-B' or self.nir_channel == 'NIR-combined':
             image = nir_image
         else: 
             image = np.dstack((rgb_image,nir_image))

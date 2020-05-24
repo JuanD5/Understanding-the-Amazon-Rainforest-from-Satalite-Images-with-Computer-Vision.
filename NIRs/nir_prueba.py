@@ -37,18 +37,26 @@ def infrared_channel_converter(path,kind = 'NDVI-calculated' ):
         inf_out = (RG[:, :, 0] - RG[:, :, 1]) / (RG[:, :, 0] + RG[:, :, 1]) # (NIR - RED) / (NIR + RED)
     if (kind == 'NDWI'):
         inf_out = (RG[:, :, 2] - RG[:, :, 0]) / (RG[:, :, 2] + RG[:, :, 0]) # (GREEN - NIR) / (GREEN + NIR)
+    if (kind == 'NIR-combined'):
+        spectral = ndvi(img, 2, 3)
+        calculated = (RG[:, :, 0] - RG[:, :, 1]) / (RG[:, :, 0] + RG[:, :, 1])
+        ndwi = (RG[:, :, 2] - RG[:, :, 0]) / (RG[:, :, 2] + RG[:, :, 0])
+        inf_out = np.dstack((spectral,calculated,ndwi))
 
     return img_rgb,inf_out
 
 root_dir = os.path.join(os.getcwd(), '../imagenes_prueba')
 img_name = 'train_0'
-nir_channel = 'NIR-R-B'
+nir_channel = 'NIR-combined'
 
 image = Image.open(os.path.join(root_dir,img_name+'.tif'))  
 rgb_image, nir_image = infrared_channel_converter(os.path.join(root_dir,img_name+'.tif'), nir_channel)
+"""
 plt.imshow(rgb_image)
 plt.savefig('a.png')
+"""
 plt.imshow(nir_image)
-
 plt.savefig('b.png')
-image = np.dstack((rgb_image,nir_image))
+print(np.size(nir_image,0))
+print(np.size(nir_image,1))
+print(np.size(nir_image,2))

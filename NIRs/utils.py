@@ -182,5 +182,10 @@ def infrared_channel_converter(path,kind = 'NDVI-calculated' ):
         inf_out = (RG[:, :, 0] - RG[:, :, 1]) / (RG[:, :, 0] + RG[:, :, 1]) # (NIR - RED) / (NIR + RED)
     if (kind == 'NDWI'):
         inf_out = (RG[:, :, 2] - RG[:, :, 0]) / (RG[:, :, 2] + RG[:, :, 0]) # (GREEN - NIR) / (GREEN + NIR)
+    if (kind == 'NIR-combined'):
+        spectral = ndvi(img, 2, 3)
+        calculated = (RG[:, :, 0] - RG[:, :, 1]) / (RG[:, :, 0] + RG[:, :, 1])
+        ndwi = (RG[:, :, 2] - RG[:, :, 0]) / (RG[:, :, 2] + RG[:, :, 0])
+        inf_out = np.dstack((spectral,calculated,ndwi))
 
     return img_rgb,inf_out

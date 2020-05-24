@@ -20,7 +20,7 @@ parser.add_argument("--nocuda", action='store_true', help="no cuda used")
 parser.add_argument("--nworkers", type=int, default=0, help="number of workers")
 parser.add_argument("--output_file", type=str, default="pred.csv", help="output file")
 parser.add_argument('--nir_channel',type = str, default= 'NDVI-calculated',
-                    help = 'Representation options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated,NDWI')
+                    help = 'Representation options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated,NDWI, NIR-combined')
 args = parser.parse_args()
 
 cuda = not args.nocuda and torch.cuda.is_available() # use cuda

@@ -45,6 +45,8 @@ parser.add_argument('--test-batch-size', type=int, default=128, metavar='N',
                     help='input batch size for testing (default: 128)')
 parser.add_argument('--epochs', type=int, default=15, metavar='N',
                     help='number of epochs to train (default: 15)')
+parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
+                    help='manual epoch number (useful on restarts)')
 parser.add_argument('--lr', type=float, default=0.01, metavar='LR',
                     help='learning rate (default: 0.01)')
 parser.add_argument("-v", action='store_true', help="verbose")
@@ -64,10 +66,12 @@ parser.add_argument('--log-interval', type=int, default=10, metavar='N',
                          'logging training status')
 parser.add_argument('--save', type=str, default='model.pt',
                     help='file on which to save model weights')
+parser.add_argument('--resume', default='', type=str, metavar='PATH',
+                    help='path to latest checkpoint (default: none)')
 parser.add_argument('--gpu', type=str, default='1',
                     help='GPU(s) to use (default: 1)')
 parser.add_argument('--nir_channel',type = str, default= 'NDVI-calculated',
-                    help = 'Representation options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated,NDWI')
+                    help = 'Representation options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated, NDWI, NIR-combined')
 
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
@@ -79,7 +83,6 @@ if args.cuda:
 kwargs = {'pin_memory': True} if args.cuda else {}
 
 os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
-
 
 # -------------------------- LOADING THE DATA --------------------------
 # Data augmentation and normalization for training
@@ -217,8 +220,30 @@ if __name__ == '__main__':
         optimizer = optim.Adam(net.parameters())
     else:
         optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+    
+    
+    if args.resume:
+        if os.path.isfile(args.resume):
+            print("=> loading checkpoint '{}'".format(args.resume))
+            if args.gpu is None:
+                checkpoint = torch.load(args.resume)
+            else:
+                # Map model to be loaded to specified single gpu.
+                loc = 'cuda:{}'.format(args.gpu)
+                checkpoint = torch.load(args.resume, map_location=loc)
+            args.start_epoch = checkpoint['epoch']
+            best_acc1 = checkpoint['best_acc1']
+            if args.gpu is not None:
+                # best_acc1 may be from a checkpoint from a different GPU
+                best_acc1 = best_acc1.to(args.gpu)
+            model.load_state_dict(checkpoint['state_dict'])
+            optimizer.load_state_dict(checkpoint['optimizer'])
+            print("=> loaded checkpoint '{}' (epoch {})"
+                  .format(args.resume, checkpoint['epoch']))
+        else:
+            print("=> no checkpoint found at '{}'".format(args.resume))
 
-    for e in range(args.epochs):
+    for e in range(args.start_epoch, args.epochs):
         start = time.time()
         train_loss, train_acc = train(net, train_loader, criterion, optimizer, args.v)
         val_loss, val_acc, fscore = validate(net, val_loader, criterion)
@@ -240,8 +265,11 @@ if __name__ == '__main__':
             best_loss = val_loss
             patience = args.patience
             utils.save_model({
+                'epoch': e + 1,
                 'arch': args.model,
-                'state_dict': net.state_dict()
+                'state_dict': net.state_dict(),
+                'optimizer': optimizer.state_dict(),
+                'loss': train_loss
             }, 'saved-models/{}-run-{}.pth.tar'.format(args.model, run))
         else:
             patience -= 1
