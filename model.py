@@ -57,7 +57,9 @@ class AmazonResNet18(nn.Module):
         RESNET_18 = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
         state = model_zoo.load_url(RESNET_18)
         mean_weights = torch.mean(state['conv1.weight'],dim=3, keepdim=True)
-        
+        rand_weights = torch.rand(mean_weights.shape)
+
+
         self.pretrained_model = models.resnet18(pretrained=True)
         shape_weights = np.shape(self.pretrained_model.conv1.weight)
         random_weights = torch.rand(shape_weights[0],shape_weights[1],shape_weights[2],shape_weights[3])
@@ -66,7 +68,7 @@ class AmazonResNet18(nn.Module):
         self.pretrained_model.conv1 = nn.Conv2d(4, 64, kernel_size=(7, 7), stride=1,padding=(3, 3), bias=False)
         
         with torch.no_grad():
-            self.pretrained_model.conv1.weight[:, :3] = random_weights
+            self.pretrained_model.conv1.weight[:, :3] = rand_weights
             self.pretrained_model.conv1.weight[:, 3] = self.pretrained_model.conv1.weight[:, 0]
     
         #x = torch.randn(10, 4, 224, 224)
