@@ -6,7 +6,7 @@ import pdb
 from torchsummary import summary
 import torch
 import torch.utils.model_zoo as model_zoo
-
+import numpy as np
 class AmazonSimpleNet(nn.Module):
     """Simple convnet """
     def __init__(self):
@@ -60,6 +60,9 @@ class AmazonResNet18(nn.Module):
 
 
         self.pretrained_model = models.resnet18(pretrained=True)
+        shape_weights = np.shape(self.pretrained_model.conv1.weight)
+        random_weights = torch.rand(shape_weights[0],shape_weights[1],shape_weights[2],shape_weights[3])
+
         #Para cuatro canales:
         self.pretrained_model.conv1 = nn.Conv2d(4, 64, kernel_size=(7, 7), stride=1,padding=(3, 3), bias=False)
         
