@@ -12,7 +12,7 @@
 8. [ResNet18 NIR-R-G](#run8) : Modelo pre-entrenado, validando y usando infrarrojo NIR-R-G.  **Evaluado.**
 9. [ResNet18 NIR-R-B](#run9) : Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Evaluado.**
 10. [ResNet18 NIR-R-B en 40 épocas](#run10): Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Evaluado.**
-11. [ResNet18 NIR-R-B en 40 épocas](#run10): Modelo pre-entrenado, validando y usando infrarrojo NIR-normal.  **Corriendo.**
+11. [ResNet18, RGB + NIR-normal](#run10): Modelo pre-entrenado, validando y usando infrarrojo NIR-normal.  **Corriendo.**
 
 ### - [Baseline](#up):
 
