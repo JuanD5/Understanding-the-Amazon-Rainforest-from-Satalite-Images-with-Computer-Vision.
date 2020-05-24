@@ -64,4 +64,53 @@ AmazonNIRResNet18(
     (layer4): Sequential(
       (0): BasicBlock(
         (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
-        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_sta
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+    (fc): Sequential(
+      (0): Linear(in_features=512, out_features=17, bias=True)
+    )
+  )
+  (classifier): Sequential(
+    (0): Linear(in_features=512, out_features=17, bias=True)
+  )
+)
+Epoch: 0	 train loss: 0.168, train acc: 0.936	
+                val loss: 0.126, val acc: 0.953	 fscore: 0.885	
+                time: 1038.9s
+Epoch: 1	 train loss: 0.136, train acc: 0.949	
+                val loss: 0.115, val acc: 0.957	 fscore: 0.898	
+                time: 1036.9s
+Epoch: 2	 train loss: 0.127, train acc: 0.953	
+                val loss: 0.109, val acc: 0.959	 fscore: 0.902	
+                time: 1037.2s
+Epoch: 3	 train loss: 0.121, train acc: 0.956	
+                val loss: 0.102, val acc: 0.962	 fscore: 0.910	
+                time: 1055.7s
+Epoch: 4	 train loss: 0.117, train acc: 0.957	
+                val loss: 0.097, val acc: 0.964	 fscore: 0.914	
+                time: 1068.7s
+Epoch: 5	 train loss: 0.112, train acc: 0.959	
+                val loss: 0.095, val acc: 0.965	 fscore: 0.916	
+                time: 1100.3s
+Epoch: 6	 train loss: 0.108, train acc: 0.960	
+                val loss: 0.089, val acc: 0.967	 fscore: 0.921	
+                time: 1055.6s
+Epoch: 7	 train loss: 0.104, train acc: 0.962	
+                val loss: 0.086, val acc: 0.967	 fscore: 0.923	
+                time: 1037.9s

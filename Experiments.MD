@@ -8,10 +8,11 @@
 4. [ResNet101](#run4): Modelo pre-entrenado. 
 5. [ResNet101](#run5): Modelo pre-entrenado en más épocas (40). **Evaluado.**
 6. [ResNet101](#run6): Modelo pre-entrenado, sin validar. **Evaluado.**
-7. [ResNet18](#run7): Modelo pre-entrenado, validando y usando infrarrojo.  **Evaluado.**
+7. [ResNet18 NDVI](#run7): Modelo pre-entrenado, validando y usando infrarrojo.  **Evaluado.**
 8. [ResNet18 NIR-R-G](#run8) : Modelo pre-entrenado, validando y usando infrarrojo NIR-R-G.  **Evaluado.**
 9. [ResNet18 NIR-R-B](#run9) : Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Evaluado.**
-10. [ResNet18 NIR-R-B en 40 épocas](#run10): Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Corriendo.**
+10. [ResNet18 NIR-R-B en 40 épocas](#run10): Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Corrió hasta la época 7. Continuar luego**
+11. [ResNet18 infrarrojo normal](#run11): Modelo pre-entrenado, validando y usando infrarrojo normal.  **Corriendo.**
 
 ### - [Baseline](#up):
 
@@ -207,7 +208,7 @@ Nombre del modelo: `AmazonResNet18-run-0.pth.tar`
 
 Nombre de la carpeta del logfile: `AmazonResNet18/run-0`
 
-Archivo de predicción: 
+Archivo de predicción: `pred_resnet18inf.csv`
 
 F-score: **Oficial:** 0.78410
 
@@ -324,3 +325,35 @@ F-score: **Oficial:**
 + [--log-interval N] 10
 + [--save SAVE] model.pt
 + --NVDI channel: NIR-R-G
+
+### [ResNet18 pre-entrenado, validando, usando infrarrojo normal](#up)
+
+<a name="run11"></a>
+
+Base de datos de train (80%) y Validación (20%). Canal de infrarrojo: Normal.
+
+Nombre del modelo: `AmazonResNet18-run-3.pth.tar`
+
+Nombre de la carpeta del logfile: `AmazonResNet18/run-3`
+
+Archivo de predicción: 
+
+F-score: **Oficial:** 
+
+**Parámetros:**
+
++ --model MODEL] AmazonResNet18
++ [--batch-size N]  8
++ [--test-batch-size N] 128
++ [--epochs N] 20
++ [--lr LR]  0.001
++ *[-v]*
++ [--momentum M] 0.5
++ [--gamma M] 2
++ [--patience PATIENCE] 20
++ [--input_size N] 256 
++ *[--no_cuda]*
++ [--seed S] 1
++ [--log-interval N] 10
++ [--save SAVE] model.pt
++ --NVDI channel: Normal
