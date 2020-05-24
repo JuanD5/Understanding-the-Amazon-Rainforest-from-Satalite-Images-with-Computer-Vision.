@@ -180,11 +180,14 @@ def infrared_channel_converter(path,kind = 'NDVI-calculated' ):
     """
     Takes the path to a .tif image and returns the RGB image and the desired Infra red respresentation.
     Default representation set to NDVI-calculated.
-    Representation options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated,NDWI
+    Representation options: normal, NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated,NDWI
     """
     img = io.imread(path)
     img_rgb = get_rgb(img, [2, 1, 0]) # RGB
     RG = get_rgb(img, [3, 2, 1]) # NIR-R-G
+
+    if (kind == 'normal'):
+        inf_out = img[:,:,3]
     if (kind == 'NIR-R-G'):
         inf_out = RG # NIR-R-G
     if (kind == 'NIR-R-B'):

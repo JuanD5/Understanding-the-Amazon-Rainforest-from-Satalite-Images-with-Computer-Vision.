@@ -47,7 +47,7 @@ parser.add_argument('--epochs', type=int, default=15, metavar='N',
                     help='number of epochs to train (default: 15)')
 parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
                     help='manual epoch number (useful on restarts)')
-parser.add_argument('--lr', type=float, default=0.01, metavar='LR',
+parser.add_argument('--lr', type=float, default=0.001, metavar='LR',
                     help='learning rate (default: 0.01)')
 parser.add_argument("-v", action='store_true', help="verbose")
 parser.add_argument('--momentum', type=float, default=0.5, metavar='M',
@@ -70,7 +70,7 @@ parser.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='path to latest checkpoint (default: none)')
 parser.add_argument('--gpu', type=str, default='1',
                     help='GPU(s) to use (default: 1)')
-parser.add_argument('--nir_channel',type = str, default= 'NDVI-calculated',
+parser.add_argument('--nir_channel',type = str, default= 'normal',
                     help = 'Representation options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated, NDWI, NIR-combined')
 
 args = parser.parse_args()
