@@ -12,7 +12,7 @@
 8. [ResNet18 NIR-R-G](#run8) : Modelo pre-entrenado, validando y usando infrarrojo NIR-R-G.  **Evaluado.**
 9. [ResNet18 NIR-R-B](#run9) : Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Evaluado.**
 10. [ResNet18 NIR-R-B en 40 épocas](#run10): Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Corrió hasta la época 7. Continuar luego**
-11. [ResNet18, RGB + NIR normal](#run11): Modelo pre-entrenado, validando y usando infrarrojo normal.  **Corriendo.**
+11. [ResNet18, RGB + NIR normal](#run11): Modelo pre-entrenado, validando y usando infrarrojo normal.  **Evaluado.**
 
 ### - [Baseline](#up):
 
@@ -336,9 +336,9 @@ Nombre del modelo: `AmazonResNet18-run-3.pth.tar`
 
 Nombre de la carpeta del logfile: `AmazonResNet18/run-3`
 
-Archivo de predicción: 
+Archivo de predicción: `pred_NIRnormal.csv`
 
-F-score: **Oficial:** 
+F-score: **Oficial:** 0.61550
 
 **Parámetros:**
 
