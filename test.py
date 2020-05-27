@@ -11,6 +11,7 @@ import pandas as pd
 from dataloader import AmazonDataset
 import dataloader 
 from tqdm import tqdm
+import numpy as np
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", type=str, help="saved model")
@@ -32,7 +33,7 @@ print('...predicting on cuda: {}'.format(cuda))
                                     #  std=[0.229, 0.224, 0.225])
 test_transforms = transforms.Compose([
                 transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+                transforms.Normalize(mean=[0.485, 0.456, 0.406,np.mean([0.485, 0.456, 0.406])], std=[0.229, 0.224, 0.225,np.mean([0.229, 0.224, 0.225])])])
 #val_transforms = transforms.Compose([transforms.Scale(args.scale),
 #                        transforms.ToTensor()])
 
