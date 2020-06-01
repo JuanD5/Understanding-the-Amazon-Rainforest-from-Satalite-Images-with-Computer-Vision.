@@ -402,3 +402,63 @@ AmazonInceptionV3(
     (fc): Linear(in_features=2048, out_features=17, bias=True)
   )
 )
+Epoch: 0	 train loss: 0.178, train acc: 0.932	
+                val loss: 0.117, val acc: 0.957	 fscore: 0.892	
+                time: 376.8s
+Epoch: 1	 train loss: 0.130, train acc: 0.952	
+                val loss: 0.106, val acc: 0.961	 fscore: 0.908	
+                time: 374.9s
+Epoch: 2	 train loss: 0.118, train acc: 0.956	
+                val loss: 0.096, val acc: 0.964	 fscore: 0.916	
+                time: 374.8s
+Epoch: 3	 train loss: 0.110, train acc: 0.959	
+                val loss: 0.091, val acc: 0.966	 fscore: 0.921	
+                time: 370.4s
+Epoch: 4	 train loss: 0.104, train acc: 0.961	
+                val loss: 0.086, val acc: 0.967	 fscore: 0.926	
+                time: 373.9s
+Epoch: 5	 train loss: 0.100, train acc: 0.963	
+                val loss: 0.082, val acc: 0.969	 fscore: 0.928	
+                time: 375.4s
+Epoch: 6	 train loss: 0.095, train acc: 0.965	
+                val loss: 0.079, val acc: 0.970	 fscore: 0.932	
+                time: 376.3s
+Epoch: 7	 train loss: 0.092, train acc: 0.966	
+                val loss: 0.078, val acc: 0.970	 fscore: 0.932	
+                time: 380.3s
+Epoch: 8	 train loss: 0.088, train acc: 0.967	
+                val loss: 0.072, val acc: 0.973	 fscore: 0.938	
+                time: 378.4s
+Epoch: 9	 train loss: 0.085, train acc: 0.968	
+                val loss: 0.069, val acc: 0.974	 fscore: 0.937	
+                time: 376.4s
+Epoch: 10	 train loss: 0.082, train acc: 0.969	
+                val loss: 0.064, val acc: 0.976	 fscore: 0.946	
+                time: 369.6s
+Epoch: 11	 train loss: 0.079, train acc: 0.971	
+                val loss: 0.063, val acc: 0.976	 fscore: 0.944	
+                time: 373.2s
+Epoch: 12	 train loss: 0.075, train acc: 0.972	
+                val loss: 0.057, val acc: 0.978	 fscore: 0.951	
+                time: 374.4s
+Epoch: 13	 train loss: 0.071, train acc: 0.973	
+                val loss: 0.054, val acc: 0.980	 fscore: 0.955	
+                time: 362.4s
+Epoch: 14	 train loss: 0.069, train acc: 0.974	
+                val loss: 0.050, val acc: 0.982	 fscore: 0.958	
+                time: 378.4s
+Epoch: 15	 train loss: 0.065, train acc: 0.976	
+                val loss: 0.048, val acc: 0.982	 fscore: 0.960	
+                time: 376.8s
+Epoch: 16	 train loss: 0.061, train acc: 0.977	
+                val loss: 0.049, val acc: 0.982	 fscore: 0.957	
+                time: 379.2s
+Epoch: 17	 train loss: 0.059, train acc: 0.978	
+                val loss: 0.039, val acc: 0.986	 fscore: 0.968	
+                time: 377.7s
+Epoch: 18	 train loss: 0.055, train acc: 0.979	
+                val loss: 0.039, val acc: 0.986	 fscore: 0.967	
+                time: 373.2s
+Epoch: 19	 train loss: 0.052, train acc: 0.981	
+                val loss: 0.034, val acc: 0.988	 fscore: 0.972	
+                time: 375.5s
