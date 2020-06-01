@@ -231,19 +231,19 @@ if __name__ == '__main__':
                 # Map model to be loaded to specified single gpu.
                 loc = 'cuda:{}'.format(args.gpu)
                 checkpoint = torch.load(args.resume, map_location=loc)
-            args.start_epoch = checkpoint['epoch']
-            best_acc1 = checkpoint['best_acc1']
-            if args.gpu is not None:
+            start_epoch = checkpoint['epoch']
+            #best_acc1 = checkpoint['best_acc1']
+            #if args.gpu is not None:
                 # best_acc1 may be from a checkpoint from a different GPU
-                best_acc1 = best_acc1.to(args.gpu)
-            model.load_state_dict(checkpoint['state_dict'])
+                #best_acc1 = best_acc1.to(args.gpu)
+            net.load_state_dict(checkpoint['state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer'])
             print("=> loaded checkpoint '{}' (epoch {})"
                   .format(args.resume, checkpoint['epoch']))
         else:
             print("=> no checkpoint found at '{}'".format(args.resume))
 
-    for e in range(args.start_epoch, args.epochs):
+    for e in range(start_epoch, args.epochs):
         start = time.time()
         train_loss, train_acc = train(net, train_loader, criterion, optimizer, args.v)
         val_loss, val_acc, fscore = validate(net, val_loader, criterion)

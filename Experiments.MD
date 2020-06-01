@@ -13,6 +13,7 @@
 10. [ResNet18 NIR-R-B en 40 épocas](#run10): Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Corrió hasta la época 7.**
 11. [ResNet18, RGB + NIR normal](#run11): Modelo pre-entrenado, validando y usando infrarrojo normal.  **Evaluado.**
 12. [Inception V3](#run12): Modelo pre-entrenado en Inception usando jpgs. **Evaluado.**
+12. [Inception V3 completo](#run13): Modelo pre-entrenado en Inception usando jpgs. **Evaluado.**
 
 ### - [Baseline](#up):
 
@@ -344,6 +345,38 @@ Nombre de la carpeta del logfile: `AmazonInceptionV3/run-0`
 Archivo de predicción: `pred_inception.csv`
 
 F-score: **Oficial:** 0.90601
+
+**Parámetros:**
+
++ --model MODEL] AmazonInceptionV3
++ [--batch-size N]  8
++ [--test-batch-size N] 128
++ [--epochs N] 20
++ [--lr LR]  0.001
++ *[-v]*
++ [--momentum M] 0.5
++ [--gamma M] 2
++ [--patience PATIENCE] 20
++ [--input_size N] 256 
++ *[--no_cuda]*
++ [--seed S] 1
++ [--log-interval N] 10
++ [--save SAVE] model.pt
++ --NVDI channel: Normal
+
+### [Inception V3 completo: Modelo pre-entrenado en Inception usando jpgs. ](#up)
+
+<a name="run13"></a>
+
+Base de datos de train (80%) y Validación (20%). Volvemos a las jpg.
+
+Nombre del modelo: `AmazonInceptionV3-run-1.pth.tar`
+
+Nombre de la carpeta del logfile: `AmazonInceptionV3/run-1`
+
+Archivo de predicción: `pred_Inception40.csv`
+
+F-score: **Oficial:** 0.89549
 
 **Parámetros:**
 
