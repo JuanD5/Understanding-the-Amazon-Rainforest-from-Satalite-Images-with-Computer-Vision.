@@ -3,17 +3,16 @@
 <a name="up"></a>
 
 1. [Baseline](#run1): Nuestro baseline. **Evaluado.**
-2. [Baseline ResNet](#run2): Nuestro baseline con pesos pre-entrenados de ResNet-18. Corrió hasta la época 8.
+2. [Baseline ResNet](#run2): Nuestro baseline con pesos pre-entrenados de ResNet-18. **Corrió hasta la época 8.**
 3. [Baseline ResNet](#run3): Nuestro baseline con pesos pre-entrenados de ResNet-18. Este sí corrió completo. **Evaluado.**
-4. [ResNet101](#run4): Modelo pre-entrenado. 
-5. [ResNet101](#run5): Modelo pre-entrenado en más épocas (40). **Evaluado.**
-6. [ResNet101](#run6): Modelo pre-entrenado, sin validar. **Evaluado.**
+5. [ResNet101](#run5): Modelo pre-entrenado. **Evaluado.**
+6. [ResNet101](#run6): Modelo pre-entrenado, sin validar, en más épocas (40). **Evaluado.**
 7. [ResNet18 NDVI](#run7): Modelo pre-entrenado, validando y usando infrarrojo.  **Evaluado.**
 8. [ResNet18 NIR-R-G](#run8) : Modelo pre-entrenado, validando y usando infrarrojo NIR-R-G.  **Evaluado.**
 9. [ResNet18 NIR-R-B](#run9) : Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Evaluado.**
-10. [ResNet18 NIR-R-B en 40 épocas](#run10): Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Corrió hasta la época 7. Continuar luego**
+10. [ResNet18 NIR-R-B en 40 épocas](#run10): Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Corrió hasta la época 7.**
 11. [ResNet18, RGB + NIR normal](#run11): Modelo pre-entrenado, validando y usando infrarrojo normal.  **Evaluado.**
-12. [Inception V3](#run12): Modelo pre-entrenado en Inception usando jpgs. **Corriendo.**
+12. [Inception V3](#run12): Modelo pre-entrenado en Inception usando jpgs. **Evaluado.**
 
 ### - [Baseline](#up):
 
@@ -32,7 +31,7 @@ F-score: **Oficial:** 0.86607
 + --model MODEL]  AmazonSimpleNet
 + [--batch-size N]  2
 + [--test-batch-size N] 128
-+ [--epochs N] 15
++ [--epochs N] 20
 + [--lr LR]  0.01
 + *[-v]*
 + [--momentum M] 0.5
@@ -65,7 +64,7 @@ F-score: 0.470, en la última época.
 + --model MODEL] AmazonResNet18
 + [--batch-size N]  1
 + [--test-batch-size N] 128
-+ [--epochs N] 15
++ [--epochs N] 20
 + [--lr LR]  0.01
 + *[-v]*
 + [--momentum M] 0.5
@@ -98,7 +97,7 @@ F-score: **Oficial:** 0.88836
 + --model MODEL] AmazonResNet18
 + [--batch-size N]  2
 + [--test-batch-size N] 128
-+ [--epochs N] 15
++ [--epochs N] 20
 + [--lr LR]  0.01
 + *[-v]*
 + [--momentum M] 0.5
@@ -110,34 +109,7 @@ F-score: **Oficial:** 0.88836
 + [--log-interval N] 10
 + [--save SAVE] model.pt
 
-### - [Baseline ResNet101 pre-entrenado](#up)
 
-<a name="run4"></a>
-
-Nombre del modelo: `AmazonResNet101-run-0.pth`
-
-Nombre de la carpeta del logfile: `AmazonResNet101/run-0`
-
-Tiempo aproximado: 50 minutos/ época
-
-F-score: 0.936
-
-**Parámetros:**
-
-+ --model MODEL] AmazonResNet101
-+ [--batch-size N]  4
-+ [--test-batch-size N] 128
-+ [--epochs N] 15
-+ [--lr LR]  0.01
-+ *[-v]*
-+ [--momentum M] 0.5
-+ [--gamma M] 2
-+ [--patience PATIENCE] **15** 
-+ [--input_size N] 256 
-+ *[--no_cuda]*
-+ [--seed S] 1
-+ [--log-interval N] 10
-+ [--save SAVE] model.pt
 
 ### - [ResNet101 pre-entrenado](#up)
 
@@ -156,7 +128,7 @@ F-score: **Oficial:** 0.84604
 + --model MODEL] AmazonResNet101
 + [--batch-size N]  8
 + [--test-batch-size N] 128
-+ [--epochs N] 40
++ [--epochs N] 20
 + [--lr LR]  0.01
 + *[-v]*
 + [--momentum M] 0.5
@@ -170,7 +142,7 @@ F-score: **Oficial:** 0.84604
 
 ### - [ResNet101 pre-entrenado, sin validar](#up)
 
-<a name="run5"></a>
+<a name="run6"></a>
 
 Base de datos de train completa, sin realizar validación.
 
@@ -369,9 +341,9 @@ Nombre del modelo: `AmazonInceptionV3-run-0.pth.tar`
 
 Nombre de la carpeta del logfile: `AmazonInceptionV3/run-0`
 
-Archivo de predicción: 
+Archivo de predicción: `pred_inception.csv`
 
-F-score: 
+F-score: **Oficial:** 0.90601
 
 **Parámetros:**
 
