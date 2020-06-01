@@ -48,6 +48,48 @@ class AmazonDataset(Dataset):
 
 
         #image = Image.open(os.path.join(self.root_dir,img_name+'.tif'))
+        image = io.imread(os.path.join(self.root_dir,img_name+'.jpg'))
+
+        labels = self.filenames.ix[idx, 1]
+        target = torch.zeros(self.n_labels)
+        label_idx = torch.LongTensor([self.labels2idx[tag] for tag in labels.split(' ')])
+        target[label_idx] = 1
+
+        if self.transform:
+            image = self.transform(image)
+        
+        return image, target
+
+class AmazonDatasetNIR(Dataset):
+
+    def __init__(self,csv_file,root_dir,labels_file,nir_channel,transform=None):
+        """
+        Args: 
+        csv_file (string): Path to the csv file with annotations.
+        root_dir (string): Directory with all the images.
+        nir_channel(string): Type of NIR 4th channel desired - options: NIR-R-G, NIR-R-B, NDVI-spectral, NDVI-calculated,NDWI
+        transform (callable, optional): Optional transform to be applied
+                on a sample.
+        """
+        self.filenames = pd.read_csv(csv_file)
+        self.root_dir = root_dir
+        self.nir_channel = nir_channel
+        self.transform = transform
+
+        self.labels, self.labels2idx, self.idx2labels = get_labels(labels_file)
+        self.n_labels = len(self.labels)
+
+    def __len__(self):
+        'Denotes the total number of samples'
+        return len(self.filenames)
+
+    def __getitem__(self,idx):
+
+        sample = self.filenames.iloc[int(idx)]
+        img_name = sample['image_name']
+
+
+        #image = Image.open(os.path.join(self.root_dir,img_name+'.tif'))
         rgb_image, nir_image = infrared_channel_converter(os.path.join(self.root_dir,img_name+'.tif'), self.nir_channel)
         if self.nir_channel == 'NIR-R-G' or self.nir_channel == 'NIR-R-B' or self.nir_channel == 'NIR-combined':
             image = nir_image

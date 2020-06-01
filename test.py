@@ -39,7 +39,7 @@ test_transforms = transforms.Compose([
 
 # Create dataloaders
 kwargs = {'pin_memory': True} if cuda else {}
-testset = AmazonDataset('csv/sample_submission_v2.csv', '/home/jlcastillo/Database_real/test-tif-v2',
+testset = AmazonDataset('csv/sample_submission_v2.csv', '/home/jlcastillo/Database_real/test_full',
                 'csv/labels.txt', args.nir_channel, test_transforms)
 test_loader = DataLoader(testset, batch_size=args.batch_size,
                         shuffle=False, num_workers=args.nworkers, **kwargs)

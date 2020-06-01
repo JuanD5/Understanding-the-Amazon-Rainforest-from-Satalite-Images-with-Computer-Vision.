@@ -26,7 +26,7 @@ import torch.nn.functional as F
 from torchvision import models, datasets, transforms
 from torch.autograd import Variable
 import torch.utils.model_zoo as model_zoo
-from dataloader import AmazonDataset, Rescale
+from dataloader import AmazonDataset, Rescale, AmazonDatasetNIR
 import model
 import utils
 from tensorboard_logger import configure, log_value
@@ -90,10 +90,10 @@ os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
 
 train_transforms = transforms.Compose([
                 transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406,np.mean([0.485, 0.456, 0.406])], std=[0.229, 0.224, 0.225,np.mean([0.229, 0.224, 0.225])])])
+                transforms.Normalize(mean=[0.485, 0.456, 0.406,], std=[0.229, 0.224, 0.225,])])
 
 print("Initializing Datasets and Dataloaders...")
-data_path = '/home/jlcastillo/Database_real/train-tif-v2'
+data_path = '/home/jlcastillo/Database_real/train-jpg'
 
 # Create training, validation and test datasets
 train_dataset = AmazonDataset('csv/train.csv', data_path,'csv/labels.txt', args.nir_channel, transform = train_transforms)
@@ -114,8 +114,8 @@ print('Validation dataset size:', dataset_sizes['val'])
 
 # -------------------------- MODEL --------------------------
 ## URL`s a los pesos
-RESNET_18 = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
-RESNET_101 = 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'
+#RESNET_18 = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
+#RESNET_101 = 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'
 
 
 

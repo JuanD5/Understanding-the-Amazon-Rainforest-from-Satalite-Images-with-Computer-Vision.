@@ -143,6 +143,31 @@ class AmazonResNet101(nn.Module):
         x = self.pretrained_model(x)
         return F.sigmoid(x)
 
+class AmazonInceptionV3(nn.Module):
+
+    """ Inception V3 pretrained"""
+
+    def __init__(self):
+        super(AmazonInceptionV3,self).__init__()
+        INCEPTION_V3 = 'https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth'
+        self.pretrained_model = models.inception_v3(num_classes=17,aux_logits=False)
+        state = model_zoo.load_url(INCEPTION_V3)
+        state = {x: state[x] for x in state if not x.startswith('fc')}
+        state = {x: state[x] for x in state if not x.startswith('AuxLogits')}
+        model_state = self.pretrained_model.state_dict()
+        model_state.update(state)
+        self.pretrained_model.load_state_dict(model_state)
+        """
+        classifier = [
+            nn.Linear(self.pretrained_model.fc.in_features, 17)
+        ]
+        self.classifier = nn.Sequential(*classifier)
+        self.pretrained_model.fc = self.classifier
+        """
+    def forward(self, x):
+        x = x.float()
+        x = self.pretrained_model(x)
+        return F.sigmoid(x)
 
 if __name__ == '__main__':
     net = AmazonSimpleNet().cuda()
