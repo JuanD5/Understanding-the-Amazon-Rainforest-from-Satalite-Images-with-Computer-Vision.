@@ -5,6 +5,7 @@
 1. [Baseline](#run1): Nuestro baseline. **Evaluado.**
 2. [Baseline ResNet](#run2): Nuestro baseline con pesos pre-entrenados de ResNet-18. **Corrió hasta la época 8.**
 3. [Baseline ResNet](#run3): Nuestro baseline con pesos pre-entrenados de ResNet-18. Este sí corrió completo. **Evaluado.**
+4. [Baseline ResNet en 40](#run4): Nuestro baseline con pesos pre-entrenados de ResNet-18 en 40 épocas. Evaluado.**
 5. [ResNet101](#run5): Modelo pre-entrenado. **Evaluado.**
 6. [ResNet101](#run6): Modelo pre-entrenado, sin validar, en más épocas (40). **Evaluado.**
 7. [ResNet18 NDVI](#run7): Modelo pre-entrenado, validando y usando infrarrojo.  **Evaluado.**
@@ -13,7 +14,7 @@
 10. [ResNet18 NIR-R-B en 40 épocas](#run10): Modelo pre-entrenado, validando y usando infrarrojo NIR-R-B.  **Corrió hasta la época 7.**
 11. [ResNet18, RGB + NIR normal](#run11): Modelo pre-entrenado, validando y usando infrarrojo normal.  **Evaluado.**
 12. [Inception V3](#run12): Modelo pre-entrenado en Inception usando jpgs. **Evaluado.**
-12. [Inception V3 completo](#run13): Modelo pre-entrenado en Inception usando jpgs. **Evaluado.**
+13. [Inception V3 completo](#run13): Modelo pre-entrenado en Inception usando jpgs. **Evaluado.**
 
 ### - [Baseline](#up):
 
@@ -99,6 +100,37 @@ F-score: **Oficial:** 0.88836
 + [--batch-size N]  2
 + [--test-batch-size N] 128
 + [--epochs N] 20
++ [--lr LR]  0.01
++ *[-v]*
++ [--momentum M] 0.5
++ [--gamma M] 2
++ [--patience PATIENCE] **10** 
++ [--input_size N] 256 
++ *[--no_cuda]*
++ [--seed S] 1
++ [--log-interval N] 10
++ [--save SAVE] model.pt
+
+### - [Baseline ResNet18 pre-entrenado en 40 épocas](#up)
+
+<a name="run3"></a>
+
+Nombre del modelo: `AmazonResNet18-run-4.pth`
+
+Nombre de la carpeta del logfile: `AmazonResNet18/run-4`
+
+Tiempo aproximado: 18 minutos/época
+
+Archivo de predicción: `pred_resnet18-40.cvs`
+
+F-score: **Oficial:** 0.89848
+
+**Parámetros:**
+
++ --model MODEL] AmazonResNet18
++ [--batch-size N]  8
++ [--test-batch-size N] 128
++ [--epochs N] 40
 + [--lr LR]  0.01
 + *[-v]*
 + [--momentum M] 0.5

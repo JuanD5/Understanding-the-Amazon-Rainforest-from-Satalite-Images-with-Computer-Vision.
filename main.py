@@ -90,7 +90,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
 
 train_transforms = transforms.Compose([
                 transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406,], std=[0.229, 0.224, 0.225,])])
+                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
 print("Initializing Datasets and Dataloaders...")
 data_path = '/home/jlcastillo/Database_real/train-jpg'
@@ -231,7 +231,7 @@ if __name__ == '__main__':
                 # Map model to be loaded to specified single gpu.
                 loc = 'cuda:{}'.format(args.gpu)
                 checkpoint = torch.load(args.resume, map_location=loc)
-            start_epoch = checkpoint['epoch']
+            args.start_epoch = checkpoint['epoch']
             #best_acc1 = checkpoint['best_acc1']
             #if args.gpu is not None:
                 # best_acc1 may be from a checkpoint from a different GPU
@@ -243,7 +243,7 @@ if __name__ == '__main__':
         else:
             print("=> no checkpoint found at '{}'".format(args.resume))
 
-    for e in range(start_epoch, args.epochs):
+    for e in range(args.start_epoch, args.epochs):
         start = time.time()
         train_loss, train_acc = train(net, train_loader, criterion, optimizer, args.v)
         val_loss, val_acc, fscore = validate(net, val_loader, criterion)
